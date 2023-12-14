@@ -1,7 +1,6 @@
 import express from 'express';
 import router from './routes/user-routes.js';
 import blogRouter from './routes/blog-routes.js';
-import dotenv from 'dotenv';
 import { config } from 'dotenv';
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
@@ -18,7 +17,7 @@ const swaggerDocument = YAML.load('./swagger.yaml');
 app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 //Load config
-dotenv.config();
+config();
 
 // passport config
 //initializePassport(passport);
@@ -53,6 +52,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //app routes
+app.use(express.json());
 app.use("/api-user", router);
 app.use("/api-blog", blogRouter);
 

@@ -15,7 +15,6 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true,
-        minlenght: 6
     },
     imageurl: {
         type: String,
@@ -23,4 +22,5 @@ const userSchema = new Schema({
     },
     blogs:[{type: mongoose.Types.ObjectId,ref:"Blog", required: true}],
 })
+
 export default mongoose.model("User", userSchema); //it will  be stored as users in mongo DB

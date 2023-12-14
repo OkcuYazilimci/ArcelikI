@@ -1,11 +1,13 @@
 import mongoose from "mongoose";
 import User from "../model/User.js";
 import Blog from "../model/blog.js";
+import { name } from "ejs";
 
 export const getAllBlogs = async(req, res, next) => {
     let blogs;
     try {
-        blogs = await Blog.find({}).populate('user', 'name email').select('_id')
+
+        blogs = await Blog.find({}).populate('user', 'name email ').select('title description user image -_id')
     }catch(err){
         return console.log(err);
     }
@@ -18,38 +20,41 @@ export const getAllBlogs = async(req, res, next) => {
 export const addBlog = async (req, res, next) => {
     const { title, description, image, user } = req.body;
     let existingUser;
-    try{
+
+    try {
         existingUser = await User.findById(user);
-    }catch (err) {
+    } catch (err) {
         console.log(err);
+        return res.status(500).json({ message: "Error finding user by ID" });
     }
+
     if (!existingUser) {
-        return res.status(400).json({message:"Unable to find user by this ID"})
+        return res.status(400).json({ message: "Unable to find user by this ID" });
     }
+
     const blog = new Blog({
         title,
         description,
         image,
         user,
     });
-    try{
+
+    try {
         const session = await mongoose.startSession();
         session.startTransaction();
-        await blog.save({session});
+        await blog.save({ session });
         existingUser.blogs.push(blog);
-        await existingUser.save({session});
+        await existingUser.save({ session });
         await session.commitTransaction();
-    } catch(err) {
+        
+    } catch (err) {
         console.log(err);
-        return res.status(500).json({message: err})
+        return res.status(500).json({ message: "Error saving blog and updating user" });
     }
-    try{
-        blog.save()
-    }catch(err) {
-        return console.log(err)
-    }
-    return res.status(200).json({blog})
+    console.log(`new blog name ${blog.title} created by ${existingUser.name}`);
+    return res.status(200).json({blog: {title: blog.title}, user: existingUser.name});
 };
+
 
 export const updateBlog = async (req, res, next) => {
     const {title, description} = req.body;
