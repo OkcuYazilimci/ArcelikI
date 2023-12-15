@@ -3,9 +3,21 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-    name: {
+    googleId: {
+        type: String,
+        required: true,
+    },
+    displayName: {
         type: String,
         required: true
+    },
+    firstName: {
+        type: String,
+        required: true,
+    },
+    lastName: {
+        type: String,
+        required: true,
     },
     email: {
         type: String,
@@ -19,6 +31,10 @@ const userSchema = new Schema({
     imageurl: {
         type: String,
         required: false,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
     },
     blogs:[{type: mongoose.Types.ObjectId,ref:"Blog", required: true}],
 })
