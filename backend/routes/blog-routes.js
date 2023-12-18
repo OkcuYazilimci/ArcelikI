@@ -3,6 +3,11 @@ import { addBlog, getAllBlogs, updateBlog, getById, deleteBlog } from "../contro
 
 const blogRouter = express.Router();
 
+blogRouter.get("/", (req, res) => {
+    res.render("login", {
+        layout: "login"
+    })
+})
 blogRouter.get("/getAll", getAllBlogs);
 blogRouter.post("/add", addBlog);
 blogRouter.put('/update/:id', updateBlog);

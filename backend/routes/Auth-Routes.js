@@ -9,7 +9,7 @@ authRouter.get("/google", passport.authenticate("google", { scope: ['profile'] }
 
 //@desc Google auth callback
 //@route GET /auth/google/callback
-authRouter.get("/goole/callback", passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
+authRouter.get("/google/callback", passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
     res.redirect('/api-blog/getAll')
 });
 
