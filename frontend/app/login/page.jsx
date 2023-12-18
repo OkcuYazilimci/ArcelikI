@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 const Login = () => {
   useEffect(() => {
     const handleGoogleLogin = () => {
-      window.location.href = '/auth/google'; // Replace with your actual backend route
+      window.location.href = 'http://localhost:3000/auth/google/callback'; // Replace with your actual backend route
     };
 
     const googleButton = document.getElementById('googleButton');
@@ -28,7 +28,7 @@ const Login = () => {
           <span class="font-light text-gray-400 mb-4">
             Please enter your details below
           </span>
-          <div class="py-4">
+          {/* <div class="py-4">
             <span class="mb-2 text-md">Email</span>
             <input
               type="text"
@@ -50,10 +50,10 @@ const Login = () => {
             class="w-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 text-white p-2 rounded-lg mb-8 hover:bg-white hover:bg-purple-400"
           >
             Sign in
-          </button>
+          </button> */}
           <button
             id="googleButton"
-            className="w-full border border-gray-300 text-md p-2 rounded-lg mb-1 hover:bg-gray-500 hover:text-white"
+            className="w-full border border-gray-300 text-md p-2 rounded-lg mb-3 hover:bg-gray-500 hover:text-white"
           >
           <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" class="w-6 h-6 inline mr-2">
             <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -64,7 +64,7 @@ const Login = () => {
           </svg>
             Sign in with Google
           </button>
-          <button class="w-full border border-gray-300 text-md p-2 rounded-lg mb-6 hover:bg-gray-500 hover:text-white">
+          {/* <button class="w-full border border-gray-300 text-md p-2 rounded-lg mb-6 hover:bg-gray-500 hover:text-white">
             <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" class="w-6 h-6 inline mr-2">
               <path
                 fill="#000000"
@@ -72,7 +72,7 @@ const Login = () => {
               />
             </svg>
             Sign in with GitHub
-          </button>
+          </button> */}
 
           <div class="text-center text-gray-400">
             Dont'have an account?

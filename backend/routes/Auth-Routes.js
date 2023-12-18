@@ -5,12 +5,12 @@ const authRouter = express.Router();
 
 //@Desc Auth with google
 //@rotue GET /auth/google
-authRouter.get("/google", passport.authenticate("google", { scope: ['profile'] }));
+authRouter.get("/google", passport.authenticate("google", { scope: ['profile', 'email'] }));
 
 //@desc Google auth callback
 //@route GET /auth/google/callback
 authRouter.get("/google/callback", passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
-    res.redirect('/api-blog/getAll')
+    res.redirect('http://localhost:3001/')
 });
 
 export default authRouter;

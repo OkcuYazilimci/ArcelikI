@@ -16,6 +16,7 @@ passport.use(
         displayName: profile.displayName,
         firstName: profile.name.givenName,
         lastName: profile.name.familyName,
+        email: profile.email,
         imageurl: profile.photos[0].value,
       };
       try {
@@ -38,9 +39,15 @@ passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-passport.deserializeUser((id, done) => {
-  User.findById(id, (err, user) => done(err, user));
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (err) {
+    done(err, null);
+  }
 });
 
 export default passport;
+
 
