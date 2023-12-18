@@ -9,6 +9,7 @@ import morgan from 'morgan';
 import exphbs from 'express-handlebars';
 import connectDB from './config/db.js';
 import passport from 'passport';
+import cors from 'cors'; // Add this line
 import session from 'express-session';
 import './config/passport.js';
 import { fileURLToPath } from 'url';
@@ -31,6 +32,9 @@ dotenv.config({ path: './config/config.env' });
 import './config/passport.js'
 
 const PORT = process.env.PORT || 6000;
+
+// Add CORS middleware here
+app.use(cors());
 
 app.listen(PORT, () => {
     console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
@@ -84,5 +88,4 @@ app.use(express.json());
 app.use("/api-user", router);
 app.use("/api-blog", blogRouter);
 app.use("/auth", authRouter);
-
 

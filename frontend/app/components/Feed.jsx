@@ -1,7 +1,7 @@
 'use client'
 
-// Import React
 import React, { useState, useEffect } from 'react';
+import { render } from 'react-dom';
 import { GET } from '../api/user/route';
 import Postcard from './Postcard';
 
@@ -9,6 +9,19 @@ import Postcard from './Postcard';
 const Feed = () => {
   // State for storing the blog data
   const [blogData, setBlogData] = useState([]);
+  // const blogs = [
+  //   { title: "Blog 1", description: "Description 1", image: "Image 1","user":{"displayName":"Umut Uygun","imageurl":"https://lh3.googleusercontent.com/a/ACg8ocIwY8dZ4BhczQGdFD3Jp2mEB839aofyHaHh2Jqz2p6p=s96-c"} },
+  //   { title: "Blog 2", description: "Description 2", image: "Image 2", "user":{"displayName":"Umut Uygun","imageurl":"https://lh3.googleusercontent.com/a/ACg8ocIwY8dZ4BhczQGdFD3Jp2mEB839aofyHaHh2Jqz2p6p=s96-c"} },
+  //   { title: "Blog 2", description: "Description 2", image: "Image 2", "user":{"displayName":"Umut Uygun","imageurl":"https://lh3.googleusercontent.com/a/ACg8ocIwY8dZ4BhczQGdFD3Jp2mEB839aofyHaHh2Jqz2p6p=s96-c"} },
+  //   { title: "Blog 2", description: "Description 2", image: "Image 2", "user":{"displayName":"Umut Uygun","imageurl":"https://lh3.googleusercontent.com/a/ACg8ocIwY8dZ4BhczQGdFD3Jp2mEB839aofyHaHh2Jqz2p6p=s96-c"} },
+  //   { title: "Blog 2", description: "Description 2", image: "Image 2", "user":{"displayName":"Umut Uygun","imageurl":"https://lh3.googleusercontent.com/a/ACg8ocIwY8dZ4BhczQGdFD3Jp2mEB839aofyHaHh2Jqz2p6p=s96-c"} },
+  //   { title: "Blog 2", description: "Description 2", image: "Image 2", "user":{"displayName":"Umut Uygun","imageurl":"https://lh3.googleusercontent.com/a/ACg8ocIwY8dZ4BhczQGdFD3Jp2mEB839aofyHaHh2Jqz2p6p=s96-c"} },
+  //   { title: "Blog 2", description: "Description 2", image: "Image 2", "user":{"displayName":"Umut Uygun","imageurl":"https://lh3.googleusercontent.com/a/ACg8ocIwY8dZ4BhczQGdFD3Jp2mEB839aofyHaHh2Jqz2p6p=s96-c"} },
+  //   { title: "Blog 2", description: "Description 2", image: "Image 2", "user":{"displayName":"Umut Uygun","imageurl":"https://lh3.googleusercontent.com/a/ACg8ocIwY8dZ4BhczQGdFD3Jp2mEB839aofyHaHh2Jqz2p6p=s96-c"} },
+  //   { title: "Blog 2", description: "Description 2", image: "Image 2", "user":{"displayName":"Umut Uygun","imageurl":"https://lh3.googleusercontent.com/a/ACg8ocIwY8dZ4BhczQGdFD3Jp2mEB839aofyHaHh2Jqz2p6p=s96-c"} },
+
+  //   // Add more blog objects as needed
+  // ];
 
   // Search states
   const [searchText, setSearchText] = useState("");
@@ -25,10 +38,10 @@ const Feed = () => {
           console.log('Fetched data:', data); // Log the data
           setBlogData(data.blogs);
         } else {
-          console.error('Error fetching data:', error);
+          console.error('Error2 fetching data:', error);
         }
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error2 fetching data:', error);
       }
     };
 
