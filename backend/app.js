@@ -49,7 +49,7 @@ app.engine('.hbs', hbs.engine);
 app.set('view engine', '.hbs');
  
 // Sessions
-const MongoStore = (await import('connect-mongo')).default;
+const MongoStore = (await import('connect-mongo')).default; 
 
 app.use(
     session({

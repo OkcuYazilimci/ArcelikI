@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON Headers Ayırma</title>
+</head>
+<body>
+
+  <script>
+    function separateByHeaders(jsonData) {
+      try {
+        // JSON verisini JavaScript nesnesine dönüştürme
+        const jsonObject = JSON.parse(jsonData);
+
+        // Başlıkları (anahtarları) ayırma fonksiyonu
+        function separate(obj, currentHeader = '') {
+          for (const key in obj) {
+            const newHeader = currentHeader ? `${currentHeader}.${key}` : key;
+
+            if (typeof obj[key] === 'object') {
+              separate(obj[key], newHeader);
+            } else {
+              console.log(`${newHeader}`);
+            }
+          }
+        }
+
+        // Başlıkları ekrana yazdırma
+        separate(jsonObject);
+      } catch (error) {
+        console.error('Geçersiz JSON formatı:', error.message);
+      }
+    }
+
+    // Kullanım örneği
+    const jsonExample = `{
+      "person": {
+        "name": "John",
+        "age": 30,
+        "address": {
+          "city": "New York",
+          "postalCode": "10001"
+        },
+        "hobbies": ["reading", "traveling"]
+      }
+    }`;
+
+    separateByHeaders(jsonExample);
+  </script>
+
+</body>
+</html>

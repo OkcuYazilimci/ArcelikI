@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs'
 export const getAllUser = async(req, res, next) => {
     let users;
     try{
-        users = await User.find().select('-password -__v');
+        users = await User.find().select('-password -_id -__v -googleId');
     }catch(err) {
         return console.log(err);
     }

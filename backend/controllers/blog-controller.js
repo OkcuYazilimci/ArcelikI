@@ -7,7 +7,7 @@ export const getAllBlogs = async(req, res, next) => {
     let blogs;
     try {
 
-        blogs = await Blog.find({}).populate('user', 'displayName email imageurl -_id').select('title description user image -_id')
+        blogs = await Blog.find({}).populate('user', 'displayName email imageurl -_id').select('title description user image createdAt -_id')
     }catch(err){
         return console.log(err);
     }
