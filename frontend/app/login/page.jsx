@@ -6,7 +6,11 @@ import { useEffect } from 'react';
 const Login = () => {
   useEffect(() => {
     const handleGoogleLogin = () => {
+<<<<<<< HEAD
+      window.location.href = 'http://localhost:3000/auth/google/'; // Replace with your actual backend route
+=======
       window.location.href = 'http://localhost:3000/auth/google'; // Replace with your actual backend route
+>>>>>>> a852c82b9c883fb9eb9d3a71ce75a0ab3dbf4a95
     };
 
     const googleButton = document.getElementById('googleButton');
