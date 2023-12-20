@@ -33,8 +33,11 @@ import './config/passport.js'
 
 const PORT = process.env.PORT || 6000;
 
-// Add CORS middleware here
-app.use(cors());
+// Add CORS middleware here for leting comm. with different ports
+app.use(cors({
+  origin: 'http://localhost:3001', // Frontend'inizin adresi
+  credentials: true, // Cookieleri paylaşmak için gerekli
+}));
 
 app.listen(PORT, () => {
     console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
@@ -51,7 +54,7 @@ if (process.env.NODE_ENV === 'development') {
 const hbs = exphbs.create({ defaultLayout: 'main', extname: '.hbs', layoutsDir: './views/layouts' });
 app.engine('.hbs', hbs.engine);
 app.set('view engine', '.hbs');
- 
+
 // Sessions
 const MongoStore = (await import('connect-mongo')).default; 
 
