@@ -38,11 +38,12 @@ const handler = NextAuth({
   
           await User.create({
             googleId,
-            displayName,
-            firstName,
-            lastName,
+            displayName: profile.name,
+            firstName: profile.given_name,
+            lastName: profile.family_name,
             email,
-            imageurl,
+            password: null,
+            imageurl: profile.picture,
             blogs: blogs || [],
             createdAt: new Date(),
           });
