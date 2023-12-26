@@ -3,25 +3,21 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-    googleId: {
-        type: String,
-        required: true,
-    },
     displayName: {
         type: String,
-        required: true,
+        required: false,
     },
     firstName: {
         type: String,
-        required: true,
+        required: false,
     },
     lastName: {
         type: String,
-        required: true,
+        required: false,
     },
     email: {
         type: String,
-        required: true,
+        required: false,
         unique: true,
     },
     password: {
@@ -36,7 +32,7 @@ const userSchema = new Schema({
         type: Date,
         default: Date.now,
     },
-    blogs: [{ type: mongoose.Types.ObjectId, ref: "Blog", required: true }],
+    blogs: [{ type: mongoose.Types.ObjectId, ref: "Blog", required: false }],
 });
 
-export default mongoose.model("User", userSchema);
+export default mongoose.models.User || mongoose.model('User', userSchema);

@@ -27,10 +27,10 @@ const Postcard = ({ blog }) => {
   const formattedTimeAgo = timeAgo(blog.createdAt);
 
   return (
-    <div className="max-w-md mx-5 bg-white rounded-xl overflow-hidden shadow-md p-4 post_box_shadow">
+    <div className="max-w-md mx-5 bg-white rounded-xl overflow-hidden shadow-md p-4 post_box_shadow mb-10">
       <div className="flex items-center mb-3">
         <img
-          src={blog.user.imageurl}
+          src={blog.user?.imageurl}
           height={30}
           width={30}
           alt=""
