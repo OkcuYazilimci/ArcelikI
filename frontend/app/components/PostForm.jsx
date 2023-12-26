@@ -1,44 +1,48 @@
 'use client'
 
 // Import the necessary dependencies
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { getSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
+import { useRouter } from "next/navigation";
 
 
 const Form = () => {
+  const { data: session } = useSession(); // Retrieve session information
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     image: '', // Add the image field
+    user: '',
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    setFormData((prevData) => ({ ...prevData, [name]: value}));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const session = await getSession();
-
+  
     try {
-      const response = await fetch('http:localhost:3000/api-blog/add', { // Use relative URL for API endpoint
+      const response = await fetch('http://localhost:3000/api-blog/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           ...formData,
+          user: session.user.id,
         }),
       });
-
+  
       if (response.ok) {
         const data = await response.json();
         console.log('Blog entry submitted successfully:', data);
+        router.push("/");
         // Optionally, you can redirect the user to another page or perform any other action
-        router.push('/');
       } else {
         console.error('Error submitting blog entry');
       }

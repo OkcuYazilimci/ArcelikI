@@ -18,11 +18,11 @@ const blogSchema = new Schema({
     user: {
         type: mongoose.Types.ObjectId,
         ref:"User",
-        required: true,
+        required: false,
     },
     createdAt: {
         type: Date,
-        default: Date.now,
+        default: Date.now(),
     },
 })
 export default mongoose.model("Blog", blogSchema);

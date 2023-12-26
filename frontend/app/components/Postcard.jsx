@@ -43,6 +43,8 @@ const Postcard = ({ blog }) => {
         className="w-full h-56 object-fit rounded-sm mb-4"
         src="https://picsum.photos/500/300"
         alt="Post Image"
+        height={300}
+        width={500}
         />
         {/* Price Tag */}
         <div className="absolute flex flex-row bottom-0 right-0 p-2 bg-black text-white rounded-bl z-10 mr-2 mb-2 rounded-xl bg-opacity-70">
