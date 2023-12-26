@@ -51,8 +51,8 @@ export const addBlog = async (req, res, next) => {
         console.log(err);
         return res.status(500).json({ message: "Error saving blog and updating user" });
     }
-    console.log(`new blog name ${blog.title} created by ${existingUser.name}`);
-    return res.status(200).json({blog: {title: blog.title}, user: existingUser.name});
+    console.log(`new blog name ${blog.title} created by ${existingUser.displayName}`);
+    return res.status(200).json({blog: {title: blog.title}, user: {title: existingUser.displayName}});
 };
 
 

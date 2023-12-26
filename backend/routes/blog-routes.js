@@ -9,8 +9,8 @@ blogRouter.get("/", (req, res) => {
     })
 })
 blogRouter.get("/getAll", getAllBlogs);
-blogRouter.post("/add", addBlog);
-blogRouter.put('/update/:id', updateBlog);
-blogRouter.get("/:id", getById);
-blogRouter.delete("/:id", deleteBlog);
+blogRouter.post("/add", addBlog); // api-blog/add
+blogRouter.put('/:id', updateBlog); // api-blog/:id (Update button in Collection)
+blogRouter.get("/:id", getById); //api-blog/:id (this end-point will be connect with Collection)
+blogRouter.delete("/:id", deleteBlog); //api-blog/:id (In Collection page there will be delete button near posts)
 export default blogRouter;
