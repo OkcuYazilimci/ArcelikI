@@ -80,7 +80,7 @@ export const getById = async (req, res, next) => {
     let user;
     try{
         user = await User.findById(id);
-        blogs = await Blog.find({}).populate('user', 'displayName email imageurl -_id').select('title description user image createdAt -_id')
+        blogs = await Blog.find({user}).populate('user', 'displayName email imageurl -_id').select('title description user image createdAt -_id')
     } catch (err) {
         console.log(err);
     }
