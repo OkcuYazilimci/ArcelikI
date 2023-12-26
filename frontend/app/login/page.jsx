@@ -1,35 +1,30 @@
 'use client';
 
 import React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
 
 const Login = () => {
+  const { data: session } = useSession();
+
+  const [providers, setProviders] = useState(null);
+
   useEffect(() => {
-    const handleGoogleLogin = () => {
-<<<<<<< HEAD
-      window.location.href = 'http://localhost:3000/auth/google/'; // Replace with your actual backend route
-=======
-      window.location.href = 'http://localhost:3000/auth/google'; // Replace with your actual backend route
->>>>>>> a852c82b9c883fb9eb9d3a71ce75a0ab3dbf4a95
-    };
-
-    const googleButton = document.getElementById('googleButton');
-    googleButton.addEventListener('click', handleGoogleLogin);
-
-    return () => {
-      googleButton.removeEventListener('click', handleGoogleLogin);
-    };
+    (async () => {
+      const res = await getProviders();
+      setProviders(res);
+    })();
   }, []);
 
   return (
     <section className='post_box_shadow'>
-      <div class="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center min-h-screen">
       <div
-        class="relative flex flex-col m-6 space-y-8 bg-white shadow-2xl post_box_shadow rounded-2xl md:flex-row md:space-y-0"
+        className="relative flex flex-col m-6 space-y-8 bg-white shadow-2xl post_box_shadow rounded-2xl md:flex-row md:space-y-0"
       >
-        <div class="flex flex-col justify-center p-8 md:p-14">
-          <span class="mb-3 text-4xl font-bold">Welcome to Arch!</span>
-          <span class="font-light text-gray-400 mb-4">
+        <div className="flex flex-col justify-center p-8 md:p-14">
+          <span className="mb-3 text-4xl font-bold">Welcome to Arch!</span>
+          <span className="font-light text-gray-400 mb-4">
             Please enter your details below
           </span>
           {/* <div class="py-4">

@@ -92,7 +92,7 @@
 }
 
 .black_btn {
-  @apply rounded-full border border-gray-500 bg-gradient-to-r from-orange-400 to-purple-700 py-1.5 px-5 text-white transition-all hover:text-black text-center text-sm font-inter flex items-center justify-center;
+  @apply rounded-full bg-gradient-to-r from-orange-400 to-purple-700 py-1.5 px-5 text-white transition-all hover:text-black text-center text-sm font-inter flex items-center justify-center;
 }
 
 .outline_btn {
@@ -120,9 +120,6 @@
 }
 
 .search-bar-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 100%;
   max-width: 600px; /* Adjust the max-width to your preference */
   margin: 0 auto; /* Center the container horizontally */
@@ -213,12 +210,48 @@
   color: #000000;
   margin: 0 -.25rem;
   padding: 0 .25rem;
-  transition: color .3s ease-in-out, box-shadow .3s ease-in-out;
+  text-decoration: none; /* Remove default underline */
+  position: relative;
+  transition: box-shadow .3s ease-in-out;
 }
 
-.nav-links:hover {
-  box-shadow: inset 100px 0 0 0 #64696b;
-  color: white;
+.nav-links::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 3px; /* Adjust the thickness of the underline as needed */
+  background-image: linear-gradient(to right, orange, purple); /* Gradient colors for the underline */
+  bottom: 0;
+  left: 0;
+  transition: width .3s ease-in-out;
 }
 
+.nav-links:hover::after {
+  width: 100%;
+}
 
+@keyframes rotateColors {
+  0% {
+    border-image-source: linear-gradient(to right, orange, purple);
+  }
+  25% {
+    border-image-source: linear-gradient(to top, orange, purple);
+  }
+  50% {
+    border-image-source: linear-gradient(to left, orange, purple);
+  }
+  75% {
+    border-image-source: linear-gradient(to bottom, orange, purple);
+  }
+  100% {
+    border-image-source: linear-gradient(to right, orange, purple);
+  }
+}
+
+.rotating-border {
+  border: 2px solid transparent;
+  border-image: linear-gradient(to right, orange, purple);
+  border-image-slice: 1;
+  border-radius: 100%;
+  animation: rotateColors 1s linear infinite;
+}
