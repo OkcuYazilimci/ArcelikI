@@ -61,7 +61,7 @@ const Form = () => {
             onChange={handleChange}
             placeholder='Write your prompt here...'
             required
-            className='form_textarea'
+            className='form_textarea border'
           />
         </label>
 
@@ -74,7 +74,7 @@ const Form = () => {
             type='text'
             placeholder='Title for your post'
             required
-            className='form_input'
+            className='form_input border'
           />
         </label>
 
@@ -87,7 +87,7 @@ const Form = () => {
             type='text'
             placeholder='Description for your post'
             required
-            className='form_input'
+            className='form_input border'
           />
         </label>
 
