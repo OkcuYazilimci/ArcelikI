@@ -1,15 +1,16 @@
 'use client'
 
-import { useSession } from 'next-auth/react';
+// Import the necessary dependencies
 import { useState } from 'react';
 import Link from 'next/link';
+import { getSession } from 'next-auth/react';
+
 
 const Form = () => {
-  const { data: session } = useSession();
   const [formData, setFormData] = useState({
-    prompt: '',
     title: '',
     description: '',
+    image: '', // Add the image field
   });
 
   const handleChange = (e) => {
@@ -20,38 +21,37 @@ const Form = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Assuming you have a backend API endpoint for handling blog submissions
-    const response = await fetch('/api/posts/new', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        ...formData,
-        user: session?.user?.id,
-      }),
-    });
+    const session = await getSession();
 
-    if (response.ok) {
-      console.log('Blog entry submitted successfully!');
-      // Optionally, you can redirect the user to another page or perform any other action
-    } else {
-      console.error('Error submitting blog entry');
+    try {
+      const response = await fetch('http:localhost:3000/api-blog/add', { // Use relative URL for API endpoint
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Blog entry submitted successfully:', data);
+        // Optionally, you can redirect the user to another page or perform any other action
+        router.push('/');
+      } else {
+        console.error('Error submitting blog entry');
+      }
+    } catch (error) {
+      console.error('Error:', error);
     }
   };
+  
 
   return (
     <section className='w-full max-w-full flex items-center justify-center flex-col mt-10'>
-      <h1 className='head_text text-left'>
-        <span className='purple_gradient'>Create an Art</span>
-      </h1>
-      <p className='desc text-center max-w-md'>
-        Create and share amazing AI Art with the world, and let your
-        imagination run wild with any AI-powered platform
-      </p>
-
       <form onSubmit={handleSubmit} className='mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism'>
-        <label>
+        {/* <label>
           <span className='font-satoshi font-semibold text-base text-gray-700'>
             Write and create your AI Art
           </span>
@@ -63,10 +63,10 @@ const Form = () => {
             required
             className='form_textarea'
           />
-        </label>
+        </label> */}
 
         <label>
-          <span className='font-satoshi font-semibold text-base text-gray-700'>Title for your post</span>
+          <span className='font-satoshi font-semibold text-base text-gray-700'>Title</span>
           <input
             name='title' // Added 'name' attribute to match state key
             value={formData.title}
@@ -74,7 +74,7 @@ const Form = () => {
             type='text'
             placeholder='Title for your post'
             required
-            className='form_input'
+            className='form_input border'
           />
         </label>
 
@@ -87,7 +87,21 @@ const Form = () => {
             type='text'
             placeholder='Description for your post'
             required
-            className='form_input'
+            className='form_input border'
+          />
+        </label>
+
+        {/* Image URL field */}
+        <label>
+          <span className='font-satoshi font-semibold text-base text-gray-700'>Image URL</span>
+          <input
+            name='image'
+            value={formData.image}
+            onChange={handleChange}
+            type='text'
+            placeholder='Image URL for your post'
+            required
+            className='form_input border'
           />
         </label>
 
