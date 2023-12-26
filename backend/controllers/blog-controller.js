@@ -76,16 +76,18 @@ export const updateBlog = async (req, res, next) => {
 
 export const getById = async (req, res, next) => {
     const id = req.params.id;
-    let blog;
+    let blogs;
+    let user;
     try{
-        blog = await Blog.findById(id).populate('user', 'name email');
+        user = await User.findById(id);
+        blogs = await Blog.find({}).populate('user', 'displayName email imageurl -_id').select('title description user image createdAt -_id')
     } catch (err) {
         console.log(err);
     }
-    if(!blog) {
+    if(!blogs) {
         return res.status(404).json({message: "No Blog Found!"})
     }
-    return res.status(200).json({blog})
+    return res.status(200).json({blogs})
 };
 
 export const deleteBlog = async (req, res, next) => {
