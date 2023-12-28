@@ -1,5 +1,9 @@
 // Define the Postcard component
 function timeAgo(timestamp) {
+  if (!timestamp) {
+    return 'Unknown time ago';
+  }
+
   const currentDate = new Date();
   const previousDate = new Date(timestamp);
 
@@ -21,6 +25,7 @@ function timeAgo(timestamp) {
     return `${days} days ago`;
   }
 }
+
 
 const Postcard = ({ blog }) => {
   const formattedTimeAgo = timeAgo(blog.createdAt);

@@ -13,12 +13,16 @@ const MyProfile = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch(`/api/posts/route`);
-      const data = await response.json();
+      try {
+        const response = await fetch(`http://localhost:3000/api-blog/${session.user.id}`);
+        const blog = await response.json();
 
-      setMyPosts(data);
+        setMyPosts(blog);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
     };
-
+  
     if (session?.user.id) fetchPosts();
   }, [session?.user.id]);
 
@@ -50,7 +54,7 @@ const MyProfile = () => {
     <Profile
       name='Profile'
       desc='Welcome to your personalized profile page. Share your exceptional AI Arts and inspire others with the power of your imagination'
-      data={myPosts}
+      blog={myPosts}
       // handleEdit={handleEdit}
       // handleDelete={handleDelete}
     />
