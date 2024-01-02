@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import router from './routes/user-routes.js';
 import blogRouter from './routes/blog-routes.js';
 import logRouter from './routes/logging-router.js';
+import storageRouter from './routes/storage-routes.js';
 import swaggerUi from 'swagger-ui-express';
 import bodyParser from 'body-parser';
 import YAML from 'yamljs';
@@ -13,7 +14,8 @@ import cors from 'cors'; // Add this line
 import session from 'express-session';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
-//import { upload } from './middleware/multer.js';
+import  firebase  from '../backend/config/firebaseConfig.js';
+import { upload } from './middleware/multer.js';
 //import {getStorage, ref, uploadBytesResumable} from "firebase/storage";
 
 // Get the directory name of the current module
@@ -78,4 +80,5 @@ app.use(express.json());
 app.use("/api-user", router);
 app.use("/api-blog", blogRouter);
 app.use("/api-logging", logRouter);
+app.use("/firebase-storage", storageRouter);
 

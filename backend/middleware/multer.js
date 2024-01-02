@@ -1,4 +1,4 @@
-/* import multer from "multer";
+import multer from "multer";
 import path from "path";
 import fs from "fs";
 // import uuid from "uuid/v4";
@@ -12,12 +12,12 @@ export const uploadMultiple = multer({
 }).array("image", 12);
 
 export const upload = multer({
-  storage: multer.memoryStorage(),
-  limits: { fileSize: 1000000 },
-  fileFilter: async function (req, file, cb) {
-  checkFileType(file, cb);
-  }
-}).single("image");
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 1000000 },
+    fileFilter: function (req, file, cb) {
+      checkFileType(file, cb);
+    }
+  }).single("image");
 
 // // Check file Type
 export function checkFileType(file, cb) {
@@ -35,5 +35,3 @@ export function checkFileType(file, cb) {
     cb("Error: Images Only !!!");
   }
 }
-
-module.exports = { uploadMultiple, upload }; */

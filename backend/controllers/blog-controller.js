@@ -1,7 +1,9 @@
-import mongoose from "mongoose";
-import User from "../model/User.js";
-import Blog from "../model/Blog.js";
-import { name } from "ejs";
+import { upload } from '../middleware/multer.js';
+import { uploadImage } from '../controllers/storage-controller.js';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import mongoose from 'mongoose';
+import Blog from '../model/Blog.js';
+import User from '../model/User.js';
 
 export const getAllBlogs = async(req, res, next) => {
     let blogs;
@@ -20,8 +22,34 @@ export const getAllBlogs = async(req, res, next) => {
     return res.status(200).json({blogs})
 };
 
+export const getAllAdmin = async(req, res, next) => {
+    let blogs;
+    try {
+
+        blogs = await Blog.find({})
+        .populate('user', 'displayName email imageurl -_id')
+        .select('title description user image createdAt _id')
+        .sort({createdAt: -1});
+    }catch(err){
+        return console.log(err);
+    }
+    if (!blogs) {
+        return res.status(404).json({message: "No blogs found"})
+    }
+    return res.status(200).json({blogs})
+};
+
 export const addBlog = async (req, res, next) => {
-    const { title, description, image, user } = req.body;
+    console.log('req.body:', req.body);
+    console.log('req.file:', req.file);
+    const { title, description, user } = req.body;
+    const { file } = req;
+
+    if (!file) {
+        console.error('No file found in the request.');
+        return res.status(400).json({ message: 'No file found in the request.' });
+    }
+
     let existingUser;
 
     try {
@@ -35,14 +63,25 @@ export const addBlog = async (req, res, next) => {
         return res.status(400).json({ message: "Unable to find user by this ID" });
     }
 
+    const storageFB = getStorage();
+    const dateTime = Date.now();
+    const fileName = `images/${dateTime}`;
+    const storageRef = ref(storageFB, fileName);
+    const metadata = {
+        contentType: file.mimetype,
+    };
+
+    try{
+    await uploadBytesResumable(storageRef, file.buffer, metadata);
+
+    const imageURL = await getDownloadURL(storageRef);
+
     const blog = new Blog({
         title,
         description,
-        image,
+        image: imageURL,
         user,
     });
-
-    try {
         const session = await mongoose.startSession();
         session.startTransaction();
         await blog.save({ session });
@@ -54,8 +93,8 @@ export const addBlog = async (req, res, next) => {
         console.log(err);
         return res.status(500).json({ message: "Error saving blog and updating user" });
     }
-    console.log(`new blog name ${blog.title} created by ${existingUser.displayName}`);
-    return res.status(200).json({blog: {title: blog.title}, user: {title: existingUser.displayName}});
+    console.log(`new blog named: ${req.body.title} created by: ${existingUser.displayName}`);
+    return res.status(200).json({Blog: {title: req.body.title}, user: {title: existingUser.displayName}});
 };
 
 

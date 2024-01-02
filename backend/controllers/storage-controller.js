@@ -26,5 +26,3 @@ export const uploadImage = async (req, res, next) => {
   }
 };
 
-app.post('/test-upload', );
-
