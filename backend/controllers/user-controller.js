@@ -27,6 +27,19 @@ export const getAllUserAdmin = async(req, res, next) => {
     return res.status(200).json({users});
 };
 
+export const getUserById = async(req, res, next) => {
+    const id = req.params.id;
+    let users;
+    try {
+        users = await User.findById(id).select('-_id displayName email imageurl')
+    } catch (err) {
+        console.log(err);
+    }
+    if(!users) {
+        return res.status(404).json({message: "User could not found!"})
+    }
+    return res.status(200).json(users);
+};
 
 export const signup = async (req, res, next) => {
     const {name, email, password} = req.body;

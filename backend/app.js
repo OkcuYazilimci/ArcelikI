@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import router from './routes/user-routes.js';
 import blogRouter from './routes/blog-routes.js';
+import logRouter from './routes/logging-router.js';
 import swaggerUi from 'swagger-ui-express';
 import bodyParser from 'body-parser';
 import YAML from 'yamljs';
@@ -12,6 +13,8 @@ import cors from 'cors'; // Add this line
 import session from 'express-session';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+//import { upload } from './middleware/multer.js';
+//import {getStorage, ref, uploadBytesResumable} from "firebase/storage";
 
 // Get the directory name of the current module
 const __filename = fileURLToPath(import.meta.url);
@@ -55,7 +58,7 @@ app.use(
       secret: 'keyboard cat',
       resave: false,
       saveUninitialized: false,
-      store: MongoStore.create({mongoUrl: process.env.MONGO_URI,}),
+      store: MongoStore.create({mongoUrl: process.env.MONGO_URI}),
     })
   )
 
@@ -74,5 +77,5 @@ app.use(session({
 app.use(express.json());
 app.use("/api-user", router);
 app.use("/api-blog", blogRouter);
-
+app.use("/api-logging", logRouter);
 
