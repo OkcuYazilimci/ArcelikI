@@ -56,9 +56,9 @@ const Nav = () => {
         <div className="flex items-center">
           {session?.user ? (
             <div className="flex items-center gap-3 md:gap-5">
-              <button type="button" onClick={signOut} className="outline_btn hidden md:block">
-                Sign Out
-              </button>
+            <button type="button" onClick={signOut} className="outline_btn hidden md:block">
+              Sign Out
+            </button>
 
               <Link href="/profile">
                 <Image
