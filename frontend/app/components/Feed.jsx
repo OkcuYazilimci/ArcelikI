@@ -37,7 +37,8 @@ const Feed = () => {
   }, []);
 
   const filterPrompts = (searchtext) => {
-    const regex = new RegExp(searchtext, "i"); // 'i' flag for case-insensitive search
+    const escapedSearchText = searchtext.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(escapedSearchText, "i"); // 'i' flag for case-insensitive search
     return blogData.filter(
       (item) =>
         regex.test(item.user.name) ||
@@ -62,7 +63,6 @@ const Feed = () => {
 
   // Determine which array to use for rendering
   const renderData = searchText ? searchedResults : blogData;
-
   // Return the JSX for rendering the component
   return (
     <section className="gap-2 mt-16">
@@ -81,12 +81,15 @@ const Feed = () => {
         </svg>
       </Link>
     </div>
-      <div className="flex flex-wrap justify-center gap-5 mx-auto">
-        {/* Map over the appropriate array and render Postcard components */}
-        {renderData.map((blog, index) => (
+    <div className="flex flex-wrap justify-center gap-5 mx-auto">
+      {renderData.length === 0 ? (
+        <p className="text-center text-gray-500">There are no posts available.</p>
+      ) : (
+        renderData.map((blog, index) => (
           <Postcard key={index} blog={blog} />
-        ))}
-      </div>
+        ))
+      )}
+    </div>
     </section>
   );
 };
