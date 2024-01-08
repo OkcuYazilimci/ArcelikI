@@ -46,7 +46,7 @@ const Postcard = ({ blog }) => {
       <div className="relative">
         <img
         className="w-full h-56 object-fit rounded-sm mb-4"
-        src="https://picsum.photos/500/300"
+        src={blog.image}
         alt="Post Image"
         height={300}
         width={500}
