@@ -14,8 +14,7 @@ import cors from 'cors'; // Add this line
 import session from 'express-session';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
-import  firebase  from '../backend/config/firebaseConfig.js';
-import { upload } from './middleware/multer.js';
+import { saveLogs } from "./controllers/log-controller.js"
 //import {getStorage, ref, uploadBytesResumable} from "firebase/storage";
 
 // Get the directory name of the current module
@@ -48,9 +47,13 @@ app.listen(PORT, () => {
 connectDB();
 
 //Logging
-if (process.env.NODE_ENV === 'development') {
-    app.use(morgan('dev')); // it shows http methods on console
-}
+const morganStream = {
+  write: (logData) => {
+    saveLogs(logData);
+  },
+};
+
+app.use(morgan("combined", {stream: morganStream}))
 
 // Sessions
 const MongoStore = (await import('connect-mongo')).default; 
