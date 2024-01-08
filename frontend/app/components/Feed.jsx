@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
+import { Suspense } from 'react';
 import { render } from 'react-dom';
 import { GET } from '../api/posts/route';
 import Postcard from './Postcard';
@@ -81,15 +82,17 @@ const Feed = () => {
         </svg>
       </Link>
     </div>
-    <div className="flex flex-wrap justify-center gap-5 mx-auto">
-      {renderData.length === 0 ? (
-        <p className="text-center text-gray-500">There are no posts available.</p>
-      ) : (
-        renderData.map((blog, index) => (
-          <Postcard key={index} blog={blog} />
-        ))
-      )}
-    </div>
+    <Suspense fallback={<div className='loader'></div>}>
+      <div className="flex flex-wrap justify-center gap-5 mx-auto">
+        {renderData.length === 0 ? (
+          <p className="text-center text-gray-500">There are no posts available.</p>
+        ) : (
+          renderData.map((blog, index) => (
+            <Postcard key={index} blog={blog} />
+          ))
+        )}
+      </div>
+    </Suspense>
     </section>
   );
 };
