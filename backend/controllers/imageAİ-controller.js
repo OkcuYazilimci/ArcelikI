@@ -1,23 +1,24 @@
-const axios = require("axios").default;
-const options = {
+import axios from "axios";
+
+export const generateImage = async(dText) => {
+  const options = {
   method: "POST",
   url: "https://api.edenai.run/v2/image/generation",
   headers: {
-    authorization: process.env.API_KEY,
+    authorization: `Bearer ${process.env.API_KEY}`,
   },
   data: {
     providers: "openai",
-    text: "a red flying balloon.",
-    resolution: "512x512",
+    text: dText,
+    resolution: "1024x1024",
     fallback_providers: "",
   },
 };
-
-axios
-  .request(options)
-  .then((response) => {
-    console.log(response.data);
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+try {
+  const response = await axios.request(options);
+  return response.data;
+} catch (error) {
+  console.error(error);
+  throw error;
+}
+};

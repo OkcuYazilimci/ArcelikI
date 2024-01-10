@@ -96,7 +96,7 @@ const Form = () => {
         </label>
 
         {/* Image URL field */}
-        <label>
+        {/*<label>
           <span className='font-satoshi font-semibold text-base text-gray-700'>Image URL</span>
           <input
             name='image'
@@ -108,7 +108,7 @@ const Form = () => {
             className='form_input border'
 
           />
-        </label>
+        </label>*/}
 
         <div className='flex-end mx-3 mb-5 gap-4'>
           <Link href='/' className='text-white text-sm border bg-red-500 rounded-full px-5 py-1.5'>

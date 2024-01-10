@@ -2,7 +2,7 @@ import { getStorage, ref, uploadBytesResumable } from "firebase/storage";
 
 export const uploadImage = async (req, res, next) => {
   try {
-    const { file } = req; // req nesnesinden file alınıyor
+    const { file } = req;
     const storageFB = getStorage();
 
     const dateTime = Date.now();
