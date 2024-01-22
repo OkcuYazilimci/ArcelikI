@@ -14,13 +14,13 @@ const CreatePost = () => {
     );
   } else {
     return (
-      <Form
+        <Form
         type='Create'
         // post={post}
         // setPost={setPost}
         // submitting={submitting}
         // handleSubmit={createPost}
-      />
+        />
     );
   }
 };

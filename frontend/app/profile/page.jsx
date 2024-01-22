@@ -9,6 +9,7 @@ const MyProfile = () => {
   const router = useRouter();
   const { data: session } = useSession();
   const [myBlogs, setMyBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -19,6 +20,8 @@ const MyProfile = () => {
         setMyBlogs(data.blogs);
       } catch (error) {
         console.error("Error fetching posts:", error);
+      } finally {
+        setLoading(false)
       }
     };
   
@@ -29,15 +32,18 @@ const MyProfile = () => {
   //   router.push(`/update-prompt?id=${post._id}`);
   // };
 
-  const handleDelete = async (post) => {
+  const handleDelete = async (postId) => {
     const hasConfirmed = confirm(
-      "Are you sure you want to delete this prompt?"
+      "Are you sure you want to delete this piece?"
     );
 
     if (hasConfirmed) {
       try {
-        await fetch(`DELETE ROUTE`, {
-          method: "DELETE",
+        const response = await fetch(`/api/blogs/${postId}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
         });
 
         const filteredPosts = myPosts.filter((item) => item._id !== post._id);
@@ -60,14 +66,19 @@ const MyProfile = () => {
 
   return (
     <section>
-      <Profile
-        name={session?.user.name.split(' ')[0]}
-        profileImage={session?.user.image}
-        desc='Welcome to your personalized profile page. Share your exceptional AI Arts and inspire others with the power of your imagination'
-        blog={myBlogs}
-        // handleEdit={handleEdit}
-        // handleDelete={handleDelete}
-      />
+      {loading ? (
+        // Loading card component goes here
+        <div className="loading-card">Loading...</div>
+      ) : (
+        <Profile
+          name={session?.user.name.split(' ')[0]}
+          profileImage={session?.user.image}
+          desc='Welcome to your personalized profile page. Share your exceptional AI Arts and inspire others with the power of your imagination'
+          blog={myBlogs}
+          // handleEdit={handleEdit}
+          handleDelete={handleDelete}
+        />
+      )}
     </section>
   );
 };

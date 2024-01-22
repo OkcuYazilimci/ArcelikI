@@ -1,6 +1,15 @@
+"use client";
+
+import { usePathname, useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+
 // Define the Postcard component
-const Postcard = ({ blog }) => {
-  
+const Postcard = ({ blog, handleDelete }) => {
+
+  const { data: session } = useSession();
+  const pathName = usePathname();
+  const router = useRouter();
+
   function timeAgo(timestamp) {
     if (!timestamp) {
       return 'Unknown time ago';
@@ -29,9 +38,9 @@ const Postcard = ({ blog }) => {
   }
 
   const formattedTimeAgo = timeAgo(blog.createdAt);
-
+  console.log(blog)
   return (
-    <div className="max-w-md mx-5 bg-white rounded-xl overflow-hidden shadow-md p-4 post_box_shadow mb-10">
+    <div className="max-w-sm mx-5 bg-white rounded-xl overflow-hidden shadow-md p-4 post_box_shadow mb-10">
       <div className="flex items-center mb-3">
         <img
           src={blog.user?.imageurl}
@@ -45,7 +54,7 @@ const Postcard = ({ blog }) => {
       </div>
       <div className="relative">
         <img
-        className="w-full h-56 object-fit rounded-sm mb-4"
+        className="w-full object-fit rounded-sm mb-4"
         src={blog.image}
         alt="Post Image"
         height={300}
@@ -61,6 +70,16 @@ const Postcard = ({ blog }) => {
         <h2 className="font-bold text-xl mb-2">{blog.title}</h2>
         <p className="text-gray-700">{blog.description}</p>
       </div>
+      {/* {session?.user.id === blog.creator.id && pathName === "/profile" && (
+        <div className='mt-5 flex-center gap-4 border-t border-gray-100 pt-3'>
+          <p
+            className='font-inter text-sm orange_gradient cursor-pointer'
+            onClick={handleDelete}
+          >
+            Delete
+          </p>
+        </div>
+      )} */}
     </div>
   );
 };
