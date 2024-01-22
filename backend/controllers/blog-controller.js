@@ -11,8 +11,8 @@ export const getAllBlogs = async(req, res, next) => {
     try {
 
         blogs = await Blog.find({})
-        .populate('user', 'displayName email imageurl -_id')
-        .select('title description user image createdAt -_id')
+        .populate('user', 'displayName email imageurl _id')
+        .select('title description user image createdAt _id')
         .sort({createdAt: -1});
     }catch(err){
         return console.log(err);
