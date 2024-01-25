@@ -18,6 +18,8 @@ const Form = () => {
     user: '',
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value}));
@@ -25,8 +27,10 @@ const Form = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
+      setLoading(true); // Set loading to true when submitting the form
+
       const response = await fetch('http://localhost:3000/api-blog/add', {
         method: 'POST',
         headers: {
@@ -37,17 +41,18 @@ const Form = () => {
           user: session.user.id,
         }),
       });
-  
+
       if (response.ok) {
         const data = await response.json();
         console.log('Blog entry submitted successfully:', data);
         router.push("/");
-        // Optionally, you can redirect the user to another page or perform any other action
       } else {
         console.error('Error submitting blog entry');
       }
     } catch (error) {
       console.error('Error:', error);
+    } finally {
+      setLoading(false); // Set loading to false when the operation is completed
     }
   };
   
@@ -118,8 +123,9 @@ const Form = () => {
           <button
             type='submit'
             className='px-5 py-1.5 text-sm bg-green-500 rounded-full text-white border'
+            disabled={loading} // Disable the button when loading
           >
-            Create
+            {loading ? 'Creating...' : 'Create'}
           </button>
         </div>
       </form>

@@ -27,7 +27,6 @@ const Feed = () => {
         const { success, data, error } = await GET();
 
         if (success) {
-          console.log('Fetched data:', data); // Log the data
           setBlogData(data.blogs);
         } else {
           console.error('Error fetching data:', error);
@@ -47,7 +46,7 @@ const Feed = () => {
     const regex = new RegExp(escapedSearchText, 'i'); // 'i' flag for case-insensitive search
     return blogData.filter(
       (item) =>
-        regex.test(item.user.name) ||
+        regex.test(item.user.displayName) ||
         regex.test(item.title) ||
         regex.test(item.user.email) ||
         regex.test(item.description)
@@ -58,7 +57,6 @@ const Feed = () => {
     clearTimeout(searchTimeout);
     setSearchText(e.target.value);
 
-    // debounce method
     setSearchTimeout(
       setTimeout(() => {
         const searchResult = filterPrompts(e.target.value);

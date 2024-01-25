@@ -32,37 +32,27 @@ const MyProfile = () => {
   //   router.push(`/update-prompt?id=${post._id}`);
   // };
 
-  const handleDelete = async (postId) => {
-    const hasConfirmed = confirm(
-      "Are you sure you want to delete this piece?"
-    );
+  const handleDelete = async (blogId) => {
 
+    const hasConfirmed = confirm("Are you sure you want to delete this piece?");
+  
     if (hasConfirmed) {
       try {
-        const response = await fetch(`/api/blogs/${postId}`, {
+        await fetch(`http://localhost:3000/api-blog/${blogId}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
           },
         });
-
-        const filteredPosts = myPosts.filter((item) => item._id !== post._id);
-
-        setMyPosts(filteredPosts);
+  
+        // Update state to remove the deleted blog
+        const filteredBlogs = myBlogs.filter((item) => item._id !== blogId);
+        setMyBlogs(filteredBlogs);
       } catch (error) {
         console.log(error);
       }
     }
   };
-
-  if (!session?.user) {
-    return (
-      <div className="flex items-center justify-center flex-col mt-10">
-        <h1 className="head_text purple_gradient mb-3">Sorry!</h1>
-        <h3>You don't have an account :(</h3>
-      </div>
-    )
-  }
 
   return (
     <section>
