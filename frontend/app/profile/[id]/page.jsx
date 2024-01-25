@@ -39,7 +39,7 @@ const UserProfile = ({ params }) => {
     <Profile
       name={userData.displayName}
       profileImage={userData.imageurl}
-      desc={`Welcome to ${userData.displayName}'s personalized profile page. Explore ${userData.displayName}'s exceptional prompts and be inspired by the power of their imagination`}
+      desc={`Welcome to ${userData.displayName}'s personalized profile page. Explore ${userData.displayName}'s exceptional AI Arts and be inspired by the power of their imagination`}
       blog={userBlogs}
     />
   );

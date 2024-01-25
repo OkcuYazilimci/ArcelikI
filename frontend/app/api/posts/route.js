@@ -7,7 +7,6 @@ export const GET = async () => {
       }
   
       const data = await response.json();
-      console.log('Data from API:', data);
       return { success: true, data };
     } catch (error) {
       console.error('Error fetching data:', error);

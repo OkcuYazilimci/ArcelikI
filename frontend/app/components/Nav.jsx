@@ -23,7 +23,7 @@ const Nav = () => {
 
   return (
     <nav className="bg-white p-4 shadow-2xl">
-      <div className="container mx-auto flex items-center justify-between">
+      <div className="container mx-auto flex justify-between items-center justify-content-space-between">
         {/* Logo on the left */}
         <Link href="/">
           <div className="flex items-center">
@@ -39,15 +39,15 @@ const Nav = () => {
         </Link>
 
         {/* Links in the center */}
-        <div className="hidden sm:flex gap-8 justify-center items-center text-xl flex-grow">
+        <div className={`hidden sm:flex gap-8 items-center text-xl flex-grow ${session?.user ? 'justify-center pl-24' : 'justify-center pl-6'}`}>
           <Link href="/" className="nav-links">
             Home
           </Link>
-          <Link href="/create-post" className="nav-links">
+          <Link href={session?.user ? "/create-post" : "/user-not-found"} className="nav-links">
             Create
           </Link>
-          <Link href="/profile" className="nav-links">
-            Collection
+          <Link href={session?.user ? "/profile" : "/user-not-found"} className="nav-links">
+            My Collection
           </Link>
           {/* Add other navigation links here */}
         </div>
@@ -56,9 +56,9 @@ const Nav = () => {
         <div className="flex items-center">
           {session?.user ? (
             <div className="flex items-center gap-3 md:gap-5">
-            <button type="button" onClick={signOut} className="outline_btn hidden md:block">
-              Sign Out
-            </button>
+              <button type="button" onClick={signOut} className="outline_btn hidden md:block">
+                Sign Out
+              </button>
 
               <Link href="/profile">
                 <Image
@@ -137,17 +137,17 @@ const Nav = () => {
             <>
               {providers &&
                 Object.values(providers).map((provider) => (
-              <button
-                type="button"
-                key={provider.name}
-                onClick={() => {
-                  signIn(provider.id);
-                }}
-                className="outline_btn"
-              >
-                Sign in
-              </button>
-              ))}
+                  <button
+                    type="button"
+                    key={provider.name}
+                    onClick={() => {
+                      signIn(provider.id);
+                    }}
+                    className="outline_btn"
+                  >
+                    Sign in
+                  </button>
+                ))}
             </>
           )}
         </div>
