@@ -2,7 +2,7 @@ import React from 'react'
 
 const Loadingcard = () => {
   return (
-    <div className='flex gap-5'>
+    <div className='flex flex-wrap justify-center gap-5'>
       <div className="mx-5 bg-white rounded-xl overflow-hidden shadow-md p-4 post_box_shadow mb-10" style={{width: 388, height: 526}}>
         <div className="flex items-center mb-3">
           {/* Display Image Skeleton */}

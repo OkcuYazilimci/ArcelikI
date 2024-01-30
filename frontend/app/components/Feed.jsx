@@ -80,7 +80,7 @@ const Feed = () => {
           required
           className="search_input peer mb-20"
         />
-        <Link href="/create-post" className="mb-20 border rotating-border rounded-full p-2 hidden md:block">
+        <Link href="/create-post" className="mb-20 border border-gray-300 rounded-md p-2.5 hidden md:block create-button">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 items-center flex" viewBox="0 0 20 20" fill="black">
             <path fillRule="evenodd" d="M10 0C4.477 0 0 4.477 0 10s4.477 10 10 10 10-4.477 10-10S15.523 0 10 0zm4 11h-3v3a1 1 0 0 1-2 0v-3H6a1 1 0 0 1 0-2h3V6a1 1 0 0 1 2 0v3h3a1 1 0 0 1 0 2z"/>
           </svg>
