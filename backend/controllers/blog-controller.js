@@ -4,16 +4,15 @@ import firebase from "../config/firebaseConfig.js";
 import mongoose from 'mongoose';
 import Blog from '../model/Blog.js';
 import User from '../model/User.js';
-import imageType from 'image-type';
 
 export const getAllBlogs = async(req, res, next) => {
     let blogs;
     try {
-
         blogs = await Blog.find({})
         .populate('user', 'displayName email imageurl _id')
         .select('title description user image createdAt _id')
-        .sort({createdAt: -1});
+        .sort({createdAt: -1})
+        .limit(12);
     }catch(err){
         return console.log(err);
     }
@@ -26,11 +25,11 @@ export const getAllBlogs = async(req, res, next) => {
 export const getAllAdmin = async(req, res, next) => {
     let blogs;
     try {
-
         blogs = await Blog.find({})
         .populate('user', 'displayName email imageurl -_id')
         .select('title description user image createdAt _id')
-        .sort({createdAt: -1});
+        .sort({createdAt: -1})
+        .limit(10);
     }catch(err){
         return console.log(err);
     }
@@ -41,13 +40,14 @@ export const getAllAdmin = async(req, res, next) => {
 };
 
 export const addBlog = async (req, res, next) => {
-    console.log('req.body:', req.body);
-    const { title, description, user } = req.body;
+    const { title, description, user} = req.body;
+
+    const userId = req.user._id;
+    console.log(userId);
 
     let existingUser;
-
     try {
-        existingUser = await User.findById(user);
+        existingUser = await User.findById(userId);
     } catch (err) {
         console.log(err);
         return res.status(500).json({ message: "Error finding user by ID" });
@@ -89,9 +89,9 @@ export const addBlog = async (req, res, next) => {
         return res.status(500).json({ message: "Error saving blog" });
     }
     console.log(`new blog named: ${req.body.title} created by: ${existingUser.displayName}`);
-    return res.status(200).json({Blog: {title: req.body.title}, user: {title: existingUser.displayName}});
+    return res.status(200).json({Blog: {title: req.body.title}, user: {title: existingUser.displayName},
+    });
 };
-
 
 export const updateBlog = async (req, res, next) => {
     const {title, description} = req.body;
