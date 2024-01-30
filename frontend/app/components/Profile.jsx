@@ -41,7 +41,7 @@ const Profile = ({ name, desc, profileImage, blog, handleEdit, handleDelete }) =
                 key={index}
                 blog={blogItem}
                 // handleEdit={() => handleEdit && handleEdit(post)}
-                handleDelete={() => handleDelete && handleDelete(post)}
+                handleDelete={() => handleDelete(blogItem._id)}
               />
             ))}
           </div>

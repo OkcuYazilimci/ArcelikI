@@ -117,8 +117,8 @@ export const getById = async (req, res, next) => {
     let user;
     try{
         user = await User.findById(id);
-        blogs = await Blog.find({user}).populate('user', 'displayName email imageurl -_id').
-        select('title description user image createdAt -_id').sort({createdAt: -1});
+        blogs = await Blog.find({user}).populate('user', 'displayName email imageurl _id').
+        select('title description user image createdAt _id').sort({createdAt: -1});
     } catch (err) {
         console.log(err);
     }

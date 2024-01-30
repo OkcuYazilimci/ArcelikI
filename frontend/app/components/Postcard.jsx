@@ -37,29 +37,38 @@ const Postcard = ({ blog, handleDelete }) => {
     }
   }
 
+  const handleProfileClick = () => {
+
+    if (blog.user._id === session?.user.id) return router.push("/profile");
+
+    router.push(`/profile/${blog.user._id}`);
+  };
+
   const formattedTimeAgo = timeAgo(blog.createdAt);
-  console.log(blog)
+
   return (
     <div className="max-w-sm mx-5 bg-white rounded-xl overflow-hidden shadow-md p-4 post_box_shadow mb-10">
-      <div className="flex items-center mb-3">
+      <div className="flex items-center mb-3"
+      >
         <img
           src={blog.user?.imageurl}
           height={30}
           width={30}
           alt=""
-          className="rounded-full mr-3 border-2 border-violet-500"
+          className="rounded-full mr-3 border-2 border-violet-500 hover:cursor-pointer"
+          onClick={handleProfileClick}
         />
-          <p className="text-gray-800 font-semibold">{blog.user?.displayName}</p>
+          <p className="text-gray-800 font-semibold hover:cursor-pointer hover:text-gray-500" onClick={handleProfileClick}>{blog.user?.displayName}</p>
           <p className="text-xs text-gray-400 ml-auto my-auto">{formattedTimeAgo}</p>
       </div>
       <div className="relative">
-        <img
+      <img
         className="w-full object-fit rounded-sm mb-4"
-        src={blog.image}
+        src={blog.image && blog.image.startsWith("http") ? blog.image : "https://i.ibb.co/rZQC2VJ/Your-image-is-being-generated-at-the-moment.png"}
         alt="Post Image"
         height={300}
         width={500}
-        />
+      />
         {/* Price Tag */}
         <div className="absolute flex flex-row bottom-0 right-0 p-2 bg-black text-white rounded-bl z-10 mr-2 mb-2 rounded-xl bg-opacity-70">
           <img src="https://cloudfront-us-east-1.images.arcpublishing.com/coindesk/ZJZZK5B2ZNF25LYQHMUTBTOMLU.png" alt="Ethereum Logo" height={20} width={20} className="mr-2" />
@@ -70,16 +79,16 @@ const Postcard = ({ blog, handleDelete }) => {
         <h2 className="font-bold text-xl mb-2">{blog.title}</h2>
         <p className="text-gray-700">{blog.description}</p>
       </div>
-      {/* {session?.user.id === blog.creator.id && pathName === "/profile" && (
-        <div className='mt-5 flex-center gap-4 border-t border-gray-100 pt-3'>
+      {session?.user.id === blog.user._id && pathName === "/profile" && (
+        <div className='w-100 text-center mt-5 flex-center border-t border-gray-100 pt-3'>
           <p
-            className='font-inter text-sm orange_gradient cursor-pointer'
+            className='w-3/4 font-inter text-sm text-white cursor-pointer rounded-xl p-2 bg-red-500 hover:opacity-75'
             onClick={handleDelete}
           >
             Delete
           </p>
         </div>
-      )} */}
+      )}
     </div>
   );
 };
