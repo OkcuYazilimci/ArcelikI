@@ -1,15 +1,6 @@
 import multer from "multer";
 import path from "path";
-import fs from "fs";
 // import uuid from "uuid/v4";
-
-export const uploadMultiple = multer({
-  storage: multer.memoryStorage(),
-  limits: { fileSize: 1000000 },
-  fileFilter: function (req, file, cb) {
-    checkFileType(file, cb);
-  }
-}).array("image", 12);
 
 export const upload = multer({
     storage: multer.memoryStorage(),

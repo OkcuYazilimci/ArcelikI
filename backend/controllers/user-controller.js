@@ -1,5 +1,6 @@
 import User from "../model/User.js";
 import bcrypt from 'bcryptjs'
+import { createToken } from "../middleware/authToken.js";
 
 export const getAllUser = async(req, res, next) => {
     let users;
@@ -38,11 +39,20 @@ export const getUserById = async(req, res, next) => {
     if(!users) {
         return res.status(404).json({message: "User could not found!"})
     }
-    return res.status(200).json(users);
+    try {
+        const token = await createToken(id);
+        return res.status(200).json({
+            users,
+            token
+        });
+    } catch (tokenError) {
+        console.error(tokenError);
+        return res.status(500).json({ message: "Error creating token" });
+    }
 };
 
 export const signup = async (req, res, next) => {
-    const {name, email, password} = req.body;
+    const {firstName, lastName, email, password} = req.body;
 
     let existingUser;
     try {
@@ -56,10 +66,14 @@ export const signup = async (req, res, next) => {
         return res.status(400).json({ message: "User already exists! Login instead" });
     }
 
-    const hashedPassword = bcrypt.hashSync(password);
+    const saltRounds = 2;
+    const salt = bcrypt.genSaltSync(saltRounds);
+    const hashedPassword = bcrypt.hashSync(password, salt);
 
     const user = new User({
-        name,
+        displayName: firstName + " " +lastName,
+        firstName,
+        lastName,
         email,
         password: hashedPassword,
         blogs: [],
@@ -76,6 +90,7 @@ export const signup = async (req, res, next) => {
 
 export const login = async(req, res, next) => {
     const {email, password} = req.body;
+    
     let existingUser;
     try {
         existingUser = await User.findOne({email});
@@ -87,8 +102,19 @@ export const login = async(req, res, next) => {
     }
     
     const isPasswordCorrect = bcrypt.compareSync(password, existingUser.password);
+
     if(!isPasswordCorrect) {
         return res.status(400).json({message: "Incorrect Password"})
     }
-    return res.status(200).json({message: "succesfull"})
+    try {
+        const token = await createToken(existingUser._id);
+
+        return res.status(200).json({
+            message: "User logged in",
+            token
+        });
+        } catch(tokenError){
+            console.error(tokenError);
+            return res.status(500).json({ message: "Error creating token" });
+        }
 };
