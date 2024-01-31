@@ -1,9 +1,7 @@
 import Feed from './components/Feed'
-import Testcomp from './components/Testcomp'
 
 export default function Home() {
-
-
+  
   return (
       <>
         <section className='main_text w-full flex-center flex-col mt-10'>

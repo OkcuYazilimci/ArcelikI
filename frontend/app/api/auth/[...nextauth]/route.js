@@ -2,6 +2,8 @@ import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import User from '../../../../model/User';
 import { connectToDB } from '../../../../utils/database';
+import { sign } from 'jsonwebtoken';
+import cookie from 'cookie';
 
 const handler = NextAuth({
   providers: [
@@ -56,7 +58,7 @@ const handler = NextAuth({
             createdAt: new Date(),
           });
         }
-  
+
         return true;
       } catch (error) {
         console.error("Error checking if user exists:", error);

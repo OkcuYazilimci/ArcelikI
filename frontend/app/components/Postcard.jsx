@@ -46,6 +46,9 @@ const Postcard = ({ blog, handleDelete }) => {
 
   const formattedTimeAgo = timeAgo(blog.createdAt);
 
+  // console.log(session?.user.id)
+  // console.log(blog.user._id)
+
   return (
     <div className="max-w-sm mx-5 bg-white rounded-xl overflow-hidden shadow-md p-4 post_box_shadow mb-10">
       <div className="flex items-center mb-3"
@@ -79,7 +82,7 @@ const Postcard = ({ blog, handleDelete }) => {
         <h2 className="font-bold text-xl mb-2">{blog.title}</h2>
         <p className="text-gray-700">{blog.description}</p>
       </div>
-      {session?.user.id === blog.user._id && pathName === "/profile" && (
+      {pathName === "/profile" && (
         <div className='w-100 text-center mt-5 flex-center border-t border-gray-100 pt-3'>
           <p
             className='w-3/4 font-inter text-sm text-white cursor-pointer rounded-xl p-2 bg-red-500 hover:opacity-75'
@@ -89,6 +92,16 @@ const Postcard = ({ blog, handleDelete }) => {
           </p>
         </div>
       )}
+      {/* {session?.user.id === blog.user._id && pathName === "/profile" && (
+        <div className='w-100 text-center mt-5 flex-center border-t border-gray-100 pt-3'>
+          <p
+            className='w-3/4 font-inter text-sm text-white cursor-pointer rounded-xl p-2 bg-red-500 hover:opacity-75'
+            onClick={handleDelete}
+          >
+            Delete
+          </p>
+        </div>
+      )} */}
     </div>
   );
 };
