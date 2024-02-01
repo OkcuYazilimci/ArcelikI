@@ -12,9 +12,8 @@ const options = {
     ],
     callbacks: {
         async jwt({ token, user }) {
-            // This is called whenever a JWT is created. If the user is defined, attach the user's token to the JWT token.
             if (user) {
-                token.accessToken = user.token; // Assuming you're attaching the token here
+                token.accessToken = user.token;
             }
             return token;
         },
