@@ -8,7 +8,7 @@ import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 import logoImage from '../../public/assets/black.svg';
 
 async function setJWTAfterSignIn() {
-  const response = await fetch('/api/auth/set-jwt', {
+  const response = await fetch('app/api/auth/set-jwt.js', {
       method: 'GET',
       credentials: 'include', // Necessary to include the cookie
   });
