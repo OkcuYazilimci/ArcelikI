@@ -5,6 +5,7 @@ import { connectToDB } from '../../../../utils/database';
 import { createToken } from '../../../../utils/authToken';
 
 const options = {
+<<<<<<< HEAD
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -31,6 +32,34 @@ const options = {
     async signIn({ account, profile, context }) {
       try {
         await connectToDB();
+=======
+    providers: [
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        }),
+    ],
+    callbacks: {
+        async jwt({ token, user }) {
+            if (user) {
+                token.accessToken = user.token;
+            }
+            return token;
+        },
+        async session({ session, token }) {
+            if (token) {
+                session.accessToken = token.accessToken;
+                const sessionUser = await User.findOne({ email: session.user.email });
+                if (sessionUser) {
+                    session.user.id = sessionUser._id.toString();
+                }
+            }
+            return session;
+        },
+        async signIn({ account, profile, context }) {
+            try {
+                await connectToDB();
+>>>>>>> 7737a7da01f30c8b855e8503d309b69e3875334b
 
         let userRecord = await User.findOne({ email: profile.email });
 

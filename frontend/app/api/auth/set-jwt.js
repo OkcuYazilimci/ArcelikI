@@ -14,7 +14,7 @@ export default async function setJWT(req, res) {
             maxAge: 60 * 60 * 24,
             path: '/',
         });
-        
+
         console.log("token: ", token);
         res.setHeader('Set-Cookie', cookie);
         res.status(200).end();

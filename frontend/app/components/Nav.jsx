@@ -8,12 +8,12 @@ import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 import logoImage from '../../public/assets/black.svg';
 
 async function setJWTAfterSignIn() {
-  const response = await fetch('app/api/auth/set-jwt.js', {
+  const response = await fetch('app/api/auth/set-jwt', {
       method: 'GET',
       credentials: 'include', // Necessary to include the cookie
   });
 
-  if (response.ok) {
+  if (response) {
       console.log('JWT token set as a cookie');
   } else {
       console.error('Failed to set JWT token');
