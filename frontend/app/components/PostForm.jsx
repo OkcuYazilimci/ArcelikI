@@ -116,17 +116,18 @@ const Form = () => {
         </label>*/}
 
         <div className='flex-end mx-3 mb-5 gap-4'>
-          <Link href='/' className='text-white text-sm border bg-red-500 rounded-full px-5 py-1.5'>
+          <Link href='/' className='px-5 py-1.5 text-sm border create-button rounded-full bg-white text-black border-black transition-all duration-300 hover:bg-black hover:text-white hover:font-bold inline-block text-center'>
             Cancel
           </Link>
 
           <button
-            type='submit'
-            className='px-5 py-1.5 text-sm bg-green-500 rounded-full text-white border'
-            disabled={loading} // Disable the button when loading
+          type='submit'
+          className='px-5 py-1.5 text-sm border create-button rounded-full bg-white text-black border-black transition-all duration-300 hover:bg-black hover:text-white hover:font-bold'
+          disabled={loading} // Disable the button when loading
           >
-            {loading ? 'Creating...' : 'Create'}
-          </button>
+          {loading ? 'Creating...' : 'Create'}
+        </button>
+
         </div>
       </form>
     </section>

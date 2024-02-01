@@ -65,5 +65,4 @@ const authorizateCookie = async (req, res, next) => {
     }
 };
 
-
-export { createToken , authorizateToken}
+export { createToken , authorizateToken }

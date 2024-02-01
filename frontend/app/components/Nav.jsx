@@ -7,19 +7,37 @@ import Link from "next/link";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 import logoImage from '../../public/assets/black.svg';
 
-// Navigation component
+async function setJWTAfterSignIn() {
+  const response = await fetch('app/api/auth/set-jwt.js', {
+      method: 'GET',
+      credentials: 'include', // Necessary to include the cookie
+  });
+
+  if (response.ok) {
+      console.log('JWT token set as a cookie');
+  } else {
+      console.error('Failed to set JWT token');
+  }
+}
+
 const Nav = () => {
   const { data: session } = useSession();
   const [providers, setProviders] = useState(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
   useEffect(() => {
+    // Fetch providers for sign-in
     const fetchData = async () => {
       const res = await getProviders();
       setProviders(res);
     };
     fetchData();
-  }, []);
+
+    // Call setJWTAfterSignIn if a session is established
+    if (session) {
+      setJWTAfterSignIn();
+    }
+  }, [session]);
 
   return (
     <nav className="bg-white p-4 shadow-2xl">
