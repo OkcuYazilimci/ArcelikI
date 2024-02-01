@@ -289,7 +289,7 @@
 
 /* Add hover effect */
 .create-button:hover {
-  border-color: rgb(0, 208, 255);
+  border-color: orange;
   box-shadow: 0 0 10px purple;
 }
 

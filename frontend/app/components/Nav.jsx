@@ -18,7 +18,7 @@ async function setJWTAfterSignIn() {
   } else {
       console.error('Failed to set JWT token');
   }
-}
+};
 
 const Nav = () => {
   const { data: session } = useSession();
