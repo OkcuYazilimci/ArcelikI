@@ -20,7 +20,6 @@ async function setJWTAfterSignIn() {
   }
 }
 
-// Navigation component
 const Nav = () => {
   const { data: session } = useSession();
   const [providers, setProviders] = useState(null);
