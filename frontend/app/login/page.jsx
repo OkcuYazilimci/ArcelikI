@@ -1,5 +1,3 @@
-import { FaGoogle } from "react-icons/fa"; // Import Google icon
-
 const Login = () => {
   return (
     <section className="post_box_shadow">
@@ -30,16 +28,16 @@ const Login = () => {
             </div>
             <div className="flex justify-end mt-4">
               {/* Your Sign In button */}
-              <button className="border border-2 text-black hover:text-gray-600 create-button font-bold py-2 px-6 rounded-full">
+              <button className="border border-2 text-black hover:text-gray-600 create-button font-bold py-2 px-4 rounded-full">
                 Sign In
               </button>
             </div>
 
-            {/* Google Sign In Button with Google icon */}
+            {/* Google Sign In Button */}
             <button
-              className="border border-2 text-black hover:text-gray-600 create-button font-bold py-2 px-6 rounded-full mt-4 flex items-center justify-center"
+              className="border border-2 text-black hover:text-gray-600 create-button font-bold py-2 px-4 rounded-full mt-4"
             >
-              <FaGoogle className="mr-2 text-xl" /> Sign In with Google
+              Sign In with Google
             </button>
           </div>
         </div>
@@ -49,4 +47,3 @@ const Login = () => {
 };
 
 export default Login;
-

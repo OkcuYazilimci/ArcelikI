@@ -1,6 +1,6 @@
 import { createToken } from '../../../../utils/authToken';
 
-export const createNewToken = async (req, res, next) => {
+const createNewToken = async (req, res) => {
     try {
         const userId = req.user._id;
         const token = await createToken(userId);
@@ -11,3 +11,9 @@ export const createNewToken = async (req, res, next) => {
         res.status(500).json({ error: "token error!" });
     }
 }
+
+const setCookie = async (req, res) => { 
+    const CookieHeader = req.header
+}
+
+export {createNewToken, }
