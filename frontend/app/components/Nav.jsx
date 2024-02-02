@@ -70,7 +70,7 @@ const Nav = () => {
           {/* Add other navigation links here */}
         </div>
 
-        {/* Desktop Navigation */}
+        {/* Desktop Navigation
         <div className="flex items-center">
           {session?.user ? (
             <div className="flex items-center gap-3 md:gap-5">
@@ -103,6 +103,31 @@ const Nav = () => {
                     Sign in
                   </button>
                 ))}
+            </>
+          )}
+        </div> */}
+
+        {/* Desktop Navigation */}
+        <div className="flex items-center">
+          {session?.user ? (
+            <div className="flex items-center gap-3 md:gap-5">
+              <button type="button" onClick={signOut} className="outline_btn hidden md:block">
+                Sign Out
+              </button>
+
+              <Link href="/profile">
+                <Image
+                  src={session?.user.image}
+                  width={37}
+                  height={37}
+                  className="rounded-full hidden md:block"
+                  alt="profile"
+                />
+              </Link>
+            </div>
+          ) : (
+            <>
+              <Link href="/login" className="outline_btn">Sign In</Link>
             </>
           )}
         </div>

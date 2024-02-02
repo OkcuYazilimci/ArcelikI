@@ -293,4 +293,19 @@
   box-shadow: 0 0 10px purple;
 }
 
+.google_btn {
+  padding: 0.5em 1.7em;
+  margin: 0 0.1em 0.1em 0;
+  border: 0.16em solid rgb(189, 189, 189);
+  border-radius: 2em;
+  font-weight: 300;
+  text-shadow: 0 0.04em 0.04em rgba(255, 255, 255, 0.253);
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.google_btn:hover {
+  color: black;
+  background-color: rgb(255, 255, 255);
+}
 
