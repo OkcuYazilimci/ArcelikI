@@ -41,7 +41,7 @@ const Nav = () => {
 
   return (
     <nav className="bg-white p-4 shadow-2xl">
-      <div className="container mx-auto flex justify-between items-center justify-content-space-between">
+      <div className="container mx-auto flex justify-between items-center">
         {/* Logo on the left */}
         <Link href="/">
           <div className="flex items-center">
@@ -103,6 +103,13 @@ const Nav = () => {
                     Sign in
                   </button>
                 ))}
+              
+              {/* Add Login Button and Redirect */}
+              <Link href="/login"> {/* Replace "/login" with your actual login page path */}
+                <button type="button" className="outline_btn">
+                  Login
+                </button>
+              </Link>
             </>
           )}
         </div>
@@ -166,6 +173,13 @@ const Nav = () => {
                     Sign in
                   </button>
                 ))}
+              
+              {/* Add Mobile Login Button and Redirect */}
+              <Link href="/login"> {/* Replace "/login" with your actual login page path */}
+                <button type="button" className="outline_btn">
+                  Login
+                </button>
+              </Link>
             </>
           )}
         </div>
@@ -174,5 +188,4 @@ const Nav = () => {
   );
 };
 
-// Export the Navigation component
 export default Nav;
