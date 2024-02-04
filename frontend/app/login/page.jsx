@@ -14,7 +14,7 @@ const Login = () => {
   }
 
   const handleGoogleSignIn = async () => {
-    await signIn("google"); // "google" is the provider ID for Google
+    await signIn("google");
   };
 
   return (
