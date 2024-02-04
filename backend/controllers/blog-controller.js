@@ -39,6 +39,13 @@ export const getAllAdmin = async(req, res, next) => {
     return res.status(200).json({blogs})
 };
 
+export const searchBlog = async (req, res) => {
+    const search = req;
+
+    console.log(search);
+    
+}
+
 export const addBlog = async (req, res, next) => {
     const { title, description, user} = req.body;
 

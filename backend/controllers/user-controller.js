@@ -108,11 +108,19 @@ export const login = async(req, res, next) => {
     }
     try {
         const token = await createToken(existingUser._id);
+       
+        res.cookie("jsonwebtoken", token, {
+            httpOnly:true,
+            maxAge: 1000*60*60*24,
+            sameSite: 'None',
+            path: '/',
+            secure: true,
+        });
 
         return res.status(200).json({
             message: "User logged in",
-            token
         });
+
         } catch(tokenError){
             console.error(tokenError);
             return res.status(500).json({ message: "Error creating token" });

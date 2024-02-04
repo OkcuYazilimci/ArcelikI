@@ -41,7 +41,7 @@ const Nav = () => {
 
   return (
     <nav className="bg-white p-4 shadow-2xl">
-      <div className="container mx-auto flex justify-between items-center justify-content-space-between">
+      <div className="container mx-auto flex justify-between items-center">
         {/* Logo on the left */}
         <Link href="/">
           <div className="flex items-center">
@@ -70,7 +70,7 @@ const Nav = () => {
           {/* Add other navigation links here */}
         </div>
 
-        {/* Desktop Navigation
+        {/* Desktop Navigation */}
         <div className="flex items-center">
           {session?.user ? (
             <div className="flex items-center gap-3 md:gap-5">
@@ -103,31 +103,13 @@ const Nav = () => {
                     Sign in
                   </button>
                 ))}
-            </>
-          )}
-        </div> */}
-
-        {/* Desktop Navigation */}
-        <div className="flex items-center">
-          {session?.user ? (
-            <div className="flex items-center gap-3 md:gap-5">
-              <button type="button" onClick={signOut} className="outline_btn hidden md:block">
-                Sign Out
-              </button>
-
-              <Link href="/profile">
-                <Image
-                  src={session?.user.image}
-                  width={37}
-                  height={37}
-                  className="rounded-full hidden md:block"
-                  alt="profile"
-                />
+              
+              {/* Add Login Button and Redirect */}
+              <Link href="/login"> {/* Replace "/login" with your actual login page path */}
+                <button type="button" className="outline_btn">
+                  Login
+                </button>
               </Link>
-            </div>
-          ) : (
-            <>
-              <Link href="/login" className="outline_btn">Sign In</Link>
             </>
           )}
         </div>
@@ -191,6 +173,13 @@ const Nav = () => {
                     Sign in
                   </button>
                 ))}
+              
+              {/* Add Mobile Login Button and Redirect */}
+              <Link href="/login"> {/* Replace "/login" with your actual login page path */}
+                <button type="button" className="outline_btn">
+                  Login
+                </button>
+              </Link>
             </>
           )}
         </div>
@@ -199,5 +188,4 @@ const Nav = () => {
   );
 };
 
-// Export the Navigation component
 export default Nav;

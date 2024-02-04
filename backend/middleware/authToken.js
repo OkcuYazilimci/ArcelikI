@@ -39,7 +39,7 @@ const authorizateToken = async (req, res, next) => {
 
 const authorizateCookie = async (req, res, next) => {
     try{ 
-        const token = req.cookies.jwtc;
+        const token = req.cookies.jsonwebtoken;
 
     if (token) {
         Jwt.verify(token. process.env.JWT_SECRET, (err) => {
@@ -50,7 +50,7 @@ const authorizateCookie = async (req, res, next) => {
             }
         })
     } else { 
-        res.redirect("localhost:3001");
+        res.redirect(process.env.CLIENT_LOGIN);
     }
 
     req.user = await User.findById(
@@ -65,4 +65,4 @@ const authorizateCookie = async (req, res, next) => {
     }
 };
 
-export { createToken , authorizateToken }
+export { createToken , authorizateCookie, authorizateToken}
