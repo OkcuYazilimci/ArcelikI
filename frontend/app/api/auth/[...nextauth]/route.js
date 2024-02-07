@@ -2,7 +2,6 @@ import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import User from '../../../../model/User';
 import { connectToDB } from '../../../../utils/database';
-import { createToken } from '../../../../utils/authToken';
 
 const options = {
     providers: [

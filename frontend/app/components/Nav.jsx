@@ -40,7 +40,7 @@ const Nav = () => {
   }, [session]);
 
   return (
-    <nav className="bg-white p-4 shadow-2xl">
+    <nav className="bg-white p-4 shadow-xl bg-opacity-55">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo on the left */}
         <Link href="/">
@@ -90,7 +90,7 @@ const Nav = () => {
             </div>
           ) : (
             <>
-              {providers &&
+              {/* {providers &&
                 Object.values(providers).map((provider) => (
                   <button
                     type="button"
@@ -102,7 +102,7 @@ const Nav = () => {
                   >
                     Sign in
                   </button>
-                ))}
+                ))} */}
               
               {/* Add Login Button and Redirect */}
               <Link href="/login"> {/* Replace "/login" with your actual login page path */}

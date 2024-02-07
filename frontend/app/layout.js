@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <Provider>
-          <main className=''>
+          <main className='bg_landing'>
             <Nav />
             {children}
             <Footer />
