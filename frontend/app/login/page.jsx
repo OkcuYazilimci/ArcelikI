@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { getDecodedToken, setAuthToken } from '../../utils/auth';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -8,22 +9,18 @@ const Login = () => {
     password: '',
   });
   const [loading, setLoading] = useState(false);
-  const router = useRouter(); // Ensure router is used correctly
+  const router = useRouter();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleGoogleSignIn = () => {
-    
-  }
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // Set loading to true when submitting the form
+    setLoading(true);
     try {
-      const response = await fetch('http://localhost:3000/api-user/login', {
+      const response = await fetch(`http://localhost:3000/api-user/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -33,7 +30,9 @@ const Login = () => {
       });
       
       if (response.ok) {
-        console.log('Login successful');
+        const { token } = await response.json();
+        console.log('Login successful'); 
+        console.log(getDecodedToken(token));
         router.push('/'); // Redirect after successful login
       } else {
         console.error('Login failed');
@@ -92,7 +91,6 @@ const Login = () => {
               </div>
             </form>
             <hr />
-            {/* Google Sign In Button (assuming it's just a placeholder for now) */}
             <button
               className="border border-2 flex items-center flex-row text-black hover:text-gray-600 create-button font-bold py-2 px-4 rounded-full mt-4"
             >
