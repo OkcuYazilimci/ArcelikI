@@ -73,6 +73,7 @@ export const addBlog = async (req, res, next) => {
         const metadata = {
             contentType: firstItem.contentType
         };
+        
         const myBuffer = Buffer.from(firstItem.image, 'base64');
         await uploadBytesResumable(storageRef, myBuffer, metadata);
         console.log('Image uploaded successfully.');

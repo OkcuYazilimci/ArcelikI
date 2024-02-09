@@ -1,6 +1,8 @@
 import User from "../model/User.js";
 import bcrypt from 'bcryptjs'
 import { createToken } from "../middleware/authToken.js";
+import crypto from "node:crypto"
+import validator from "validator"
 
 export const getAllUser = async(req, res, next) => {
     let users;
@@ -62,6 +64,10 @@ export const signup = async (req, res, next) => {
         return res.status(500).json({ message: "Error checking existing user" });
     }
 
+    if(!validator.isEmail(email)) {
+        return res.status(400).json({ message: "Not a valid email! Please enter a valid one" });
+    }
+    
     if (existingUser) {
         return res.status(400).json({ message: "User already exists! Login instead" });
     }
@@ -76,12 +82,26 @@ export const signup = async (req, res, next) => {
         lastName,
         email,
         password: hashedPassword,
+        emailToken:crypto.randomBytes(64).toString("hex"),
         blogs: [],
     });
 
+    if (!firstName || !lastName || !password || !email) {
+        return res.status(400).json({ message: "All fields must be filled!" });
+    }
+
     try {
         await user.save();
-        return res.status(201).json({ user });
+        
+        const responseUser = {
+            displayName: user.displayName,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            emailToken: user.emailToken
+        };
+
+        return res.status(201).json({ responseUser });
     } catch (err) {
         console.error(err);
         return res.status(500).json({ message: "Error saving user" });
@@ -102,10 +122,15 @@ export const login = async(req, res, next) => {
     }
     
     const isPasswordCorrect = bcrypt.compareSync(password, existingUser.password);
+    
+    if (!existingUser.isEmailVerified) {
+        return res.status(400).json({ message: "Email is not verified! "});
+    }
 
     if(!isPasswordCorrect) {
         return res.status(400).json({message: "Incorrect Password"})
     }
+
     try {
         const token = await createToken(existingUser._id);
        
