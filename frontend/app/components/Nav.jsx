@@ -7,19 +7,6 @@ import Link from "next/link";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 import logoImage from '../../public/assets/black.svg';
 
-async function setJWTAfterSignIn() {
-  const response = await fetch('app/api/auth/set-jwt', {
-      method: 'GET',
-      credentials: 'include', // Necessary to include the cookie
-  });
-
-  if (response) {
-      console.log('JWT token set as a cookie');
-  } else {
-      console.error('Failed to set JWT token');
-  }
-};
-
 const Nav = () => {
   const { data: session } = useSession();
   const [providers, setProviders] = useState(null);
@@ -32,11 +19,6 @@ const Nav = () => {
       setProviders(res);
     };
     fetchData();
-
-    // Call setJWTAfterSignIn if a session is established
-    if (session) {
-      setJWTAfterSignIn();
-    }
   }, [session]);
 
   return (
@@ -175,7 +157,7 @@ const Nav = () => {
                 ))}
               
               {/* Add Mobile Login Button and Redirect */}
-              <Link href="/login"> {/* Replace "/login" with your actual login page path */}
+              <Link href="/login">
                 <button type="button" className="outline_btn">
                   Login
                 </button>
