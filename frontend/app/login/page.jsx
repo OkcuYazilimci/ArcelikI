@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getDecodedToken, setAuthToken } from '../../utils/auth';
-
+import { parseCookies } from 'nookies';
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
@@ -30,9 +30,21 @@ const Login = () => {
       });
       
       if (response.ok) {
-        const { token } = await response.json();
-        console.log('Login successful'); 
-        console.log(getDecodedToken(token));
+        // Retrieve JWT token from cookies
+        const cookies = document.cookie.split(';');
+        let token;
+        cookies.forEach(cookie => {
+          const [name, value] = cookie.split('=');
+          if (name.trim() === 'jsonwebtoken') {
+            token = value;
+          }
+        });
+    
+        console.log(token);
+
+        //console.log(getDecodedToken(token));
+
+        localStorage.setItem('jsonwebtoken', token);
         router.push('/'); // Redirect after successful login
       } else {
         console.error('Login failed');

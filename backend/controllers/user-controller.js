@@ -118,17 +118,17 @@ export const login = async(req, res, next) => {
         return console.log(err);
     }
     if(!existingUser) {
-        return res.status(404).json( {message: "Could not find the user"});
+        return res.status(404).json( { message: "Could not find the user" });
     }
     
     const isPasswordCorrect = bcrypt.compareSync(password, existingUser.password);
     
-    if (!existingUser.isEmailVerified) {
+    /*if (!existingUser.isEmailVerified) {
         return res.status(400).json({ message: "Email is not verified! "});
-    }
+    }*/
 
     if(!isPasswordCorrect) {
-        return res.status(400).json({message: "Incorrect Password"})
+        return res.status(400).json({ message: "Incorrect Password" })
     }
 
     try {
@@ -151,3 +151,7 @@ export const login = async(req, res, next) => {
             return res.status(500).json({ message: "Error creating token" });
         }
 };
+
+export const logout = () => {
+    
+}

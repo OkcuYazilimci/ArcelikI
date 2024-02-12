@@ -37,32 +37,52 @@ const authorizateToken = async (req, res, next) => {
     }
 };
 
-const authorizateCookie = async (req, res, next) => {
-    try{ 
+const authorizeCookie = async (req, res, next) => {
+    try {
         const token = req.cookies.jsonwebtoken;
 
-    if (token) {
-        Jwt.verify(token. process.env.JWT_SECRET, (err) => {
+        if (!token) {
+            return res.redirect(process.env.CLIENT_LOGIN);
+        }
+
+        Jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
             if (err) {
                 console.log(err.message);
+                return res.status(401).json({
+                    error: 'Not Authorized, invalid token'
+                });
             } else {
+                req.user = await User.findById(decoded.userId);
                 next();
             }
-        })
-    } else { 
-        res.redirect(process.env.CLIENT_LOGIN);
-    }
-
-    req.user = await User.findById(
-        Jwt.verify(token, process.env.JWT_SECRET).userId
-        );
-
-    next();
+        });
     } catch (error) {
+        console.error(error);
         res.status(401).json({
-            error: 'Not Authorized'
-        })
+            error: 'Not Authorized, verification failed'
+        });
     }
 };
 
-export { createToken , authorizateCookie, authorizateToken}
+const checkUser = async (req, res ,next) => {
+    const token = req.cookies.jsonwebtoken;
+
+    if (token) {
+        Jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
+            if (err) {
+                console.log(err.message);
+                res.locals.user = null;
+                next();
+            } else {
+                const user = await User.findById(decodedToken.userId);
+                res.locals.user = user;
+                next();
+            }
+        })
+    } else {
+        res.locals.user = null;
+        next();
+    }
+    } 
+
+export { createToken , authorizeCookie, authorizateToken, checkUser}

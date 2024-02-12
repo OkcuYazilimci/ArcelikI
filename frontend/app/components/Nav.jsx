@@ -43,10 +43,10 @@ const Nav = () => {
           <Link href="/" className="nav-links">
             Home
           </Link>
-          <Link href={session?.user ? "/create-post" : "/user-not-found"} className="nav-links">
+          <Link href="/create-post" className="nav-links">
             Create
           </Link>
-          <Link href={session?.user ? "/profile" : "/user-not-found"} className="nav-links">
+          <Link href="/profile" className="nav-links">
             My Collection
           </Link>
           {/* Add other navigation links here */}
