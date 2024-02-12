@@ -117,6 +117,7 @@ export const login = async(req, res, next) => {
     } catch (err) {
         return console.log(err);
     }
+
     if(!existingUser) {
         return res.status(404).json( { message: "Could not find the user" });
     }
@@ -133,7 +134,13 @@ export const login = async(req, res, next) => {
 
     try {
         const token = await createToken(existingUser._id);
-       
+        const idString = existingUser._id.toString();
+
+        console.log("\nID STRING: ",idString);
+        
+        //const idPull = /ObjectId\('([0-9a-fA-F]+)'\)/;
+        //const objectId = idString.match(idPull);
+
         res.cookie("jsonwebtoken", token, {
             httpOnly:true,
             maxAge: 1000*60*60*24,
@@ -142,8 +149,16 @@ export const login = async(req, res, next) => {
             secure: true,
         });
 
+        res.cookie("user_id", idString, {
+            httpOnly:true,
+            maxAge: 1000*60*60*24,
+            samesite: 'None',
+            path: '/',
+            secure: true,
+            });
+
         return res.status(200).json({
-            message: "User logged in",
+            message: "User logged in"
         });
 
         } catch(tokenError){

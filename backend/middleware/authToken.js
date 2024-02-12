@@ -13,17 +13,18 @@ const createToken = async (userId) => {
 };
 
 const authorizateToken = async (req, res, next) => {
+    
     try{ 
         const token = 
-    req.headers['authorization'] && req.headers['authorization'].split(" ")[1];
+        req.headers['authorization'] && req.headers['authorization'].split(" ")[1];
 
-    console.log("token",  token);
-    if (!token) {
-        return res.status(401).json({
+        console.log("token", token);
+        if (!token) {
+            return res.status(401).json({
             succeed: false,
             error: 'No token available',
-        });
-    }
+            });
+        }
 
     req.user = await User.findById(
         Jwt.verify(token, process.env.JWT_SECRET).userId
