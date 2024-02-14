@@ -47,9 +47,8 @@ export const searchBlog = async (req, res) => {
 }
 
 export const addBlog = async (req, res, next) => {
-    const { title, description, user} = req.body;
-
-    const userId = req.user._id;
+    const { title, description} = req.body;
+    const userId = req.user;
     console.log(userId);
 
     let existingUser;
@@ -83,7 +82,7 @@ export const addBlog = async (req, res, next) => {
         title,
         description,
         image: imageURL,
-        user,
+        user: userId
     });
         const session = await mongoose.startSession();
         session.startTransaction();
@@ -119,14 +118,17 @@ export const updateBlog = async (req, res, next) => {
     return res.status(200).json({blog})
 };
 
-export const getById = async (req, res, next) => {
-    const id = req.params.id;
+export const getById = async (req, res) => {
+    const id = req.user;
+    console.log("\n Id right: ",id);
+
     let blogs;
     let user;
     try{
         user = await User.findById(id);
         blogs = await Blog.find({user}).populate('user', 'displayName email imageurl _id').
         select('title description user image createdAt _id').sort({createdAt: -1});
+        console.log(blogs);
     } catch (err) {
         console.log(err);
     }
@@ -136,7 +138,7 @@ export const getById = async (req, res, next) => {
     return res.status(200).json({blogs})
 };
 
-export const deleteBlog = async (req, res, next) => {
+export const deleteBlog = async (req, res) => {
     const id = req.params.id;
     let blog;
     try{

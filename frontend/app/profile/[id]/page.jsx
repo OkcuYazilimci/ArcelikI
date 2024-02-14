@@ -15,24 +15,27 @@ const UserProfile = ({ params }) => {
 
   useEffect(() => {
     const fetchBlogs = async () => {
-      const response = await fetch(`http://localhost:3000/api-blog/${params?.id}`);
+      const response = await fetch(`http://localhost:3000/api-blog/getById`, {
+      credentials: 'include'});
       const data = await response.json();
 
       setUserBlogs(data.blogs);
     };
 
-    if (params?.id) fetchBlogs();
+    fetchBlogs();
   }, [params.id]);
 
   useEffect(() => {
     const fetchUser = async () => {
-      const response = await fetch(`http://localhost:3000/api-user/${params?.id}`);
+      const response = await fetch(`http://localhost:3000/api-user/getById`, {
+        credentials: 'include'
+      });
       const data = await response.json();
 
       setUserData(data);
     };
 
-    if (params?.id) fetchUser();
+   fetchUser();
   }, [params.id]);
 
   return (

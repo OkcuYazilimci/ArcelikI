@@ -1,4 +1,5 @@
 import User from "../model/User.js";
+import Blog from "../model/Blog.js";
 import bcrypt from 'bcryptjs'
 import { createToken } from "../middleware/authToken.js";
 import crypto from "node:crypto"
@@ -31,26 +32,30 @@ export const getAllUserAdmin = async(req, res, next) => {
 };
 
 export const getUserById = async(req, res, next) => {
-    const id = req.params.id;
+    const id = req.user;
     let users;
+    let blogs;
     try {
-        users = await User.findById(id).select('-_id displayName email imageurl')
+        users = await User.findById(id).select('-_id displayName email imageurl blogs')
+        .populate({
+            path: 'blogs',
+            select: 'title description imageurl', 
+        });
+
+        blogs = await Blog.find({ user: id }).select('_id title description image createdAt');
+
+        console.log(users);
     } catch (err) {
         console.log(err);
     }
     if(!users) {
         return res.status(404).json({message: "User could not found!"})
     }
-    try {
-        const token = await createToken(id);
-        return res.status(200).json({
-            users,
-            token
-        });
-    } catch (tokenError) {
-        console.error(tokenError);
-        return res.status(500).json({ message: "Error creating token" });
-    }
+   
+    return res.status(200).json({
+        users,
+        blogs
+    });
 };
 
 export const signup = async (req, res, next) => {

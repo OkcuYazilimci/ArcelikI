@@ -17,7 +17,9 @@ const removeAuthToken = () => {
 
 const fetchUserInfo = async (userId) => {
   try {
-    const response = await fetch(`http://localhost:3000/api-user/${userId}`);
+    const response = await fetch(`http://localhost:3000/api-user/getById`, {
+      credentials: 'include'
+    });
     const userData = await response.json();
     return userData;
   } catch (error) {

@@ -7,26 +7,26 @@ import Profile from "../components/Profile";
 
 const MyProfile = () => {
   const router = useRouter();
-  const { data: session } = useSession();
   const [myBlogs, setMyBlogs] = useState([]);
+  const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api-blog/${session.user.id}`);
+        const response = await fetch(`http://localhost:3000/api-user/getById`, {
+          credentials: 'include'
+        });
         const data = await response.json();
-
+        setUserData(data.users);
         setMyBlogs(data.blogs);
       } catch (error) {
-        console.error("Error fetching posts:", error);
-      } finally {
-        setLoading(false)
+        console.error("Error fetching user data:", error);
       }
     };
   
-    if (session?.user.id) fetchBlogs();
-  }, [session?.user.id]);
+    fetchBlogs();
+  }, []);
 
   // const handleEdit = (post) => {
   //   router.push(`/update-prompt?id=${post._id}`);
@@ -43,6 +43,7 @@ const MyProfile = () => {
           headers: {
             'Content-Type': 'application/json',
           },
+          credentials: 'include'
         });
   
         // Update state to remove the deleted blog
@@ -56,19 +57,14 @@ const MyProfile = () => {
 
   return (
     <section>
-      {loading ? (
-        // Loading card component goes here
-        <div className="loading-card">Loading...</div>
-      ) : (
         <Profile
-          name={session?.user.name.split(' ')[0]}
-          profileImage={session?.user.image}
+          name={userData.displayName}
+          profileImage={userData.imageUrl}
           desc='Welcome to your personalized profile page. Share your exceptional AI Arts and inspire others with the power of your imagination'
-          blog={myBlogs}
+          blogs={userData.blogs}
           // handleEdit={handleEdit}
           handleDelete={handleDelete}
         />
-      )}
     </section>
   );
 };

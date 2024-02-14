@@ -3,7 +3,8 @@ import User from "../model/User.js";
 
 const createToken = async (userId) => {
     try {
-        const token = Jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '1d' });
+        const token = Jwt.sign({userId} ,process.env.JWT_SECRET, { expiresIn: '1d' });
+        console.log(process.env.JWT_SECRET)
         console.log('Token created successfully:', token);
         return token;
     } catch (error) {
@@ -12,7 +13,7 @@ const createToken = async (userId) => {
     }
 };
 
-const authorizateToken = async (req, res, next) => {
+const authorizeToken = async (req, res, next) => {
     
     try{ 
         const token = 
@@ -25,12 +26,18 @@ const authorizateToken = async (req, res, next) => {
             error: 'No token available',
             });
         }
-
-    req.user = await User.findById(
-        Jwt.verify(token, process.env.JWT_SECRET).userId
-        );
-
-    next();
+        Jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
+                if (err) {
+                    console.log(err.message);
+                    return res.status(401).json({
+                        error: 'Not Authorized, invalid token'
+                    });
+                } else {
+                    req.user = decoded.userId
+                    console.log("req user id: ", req.user);
+                    next();
+                }
+                });
     } catch (error) {
         res.status(401).json({
             error: 'Not Authorized'
@@ -53,7 +60,7 @@ const authorizeCookie = async (req, res, next) => {
                     error: 'Not Authorized, invalid token'
                 });
             } else {
-                req.user = await User.findById(decoded.userId);
+                req.user = decoded.userId
                 next();
             }
         });
@@ -86,4 +93,4 @@ const checkUser = async (req, res ,next) => {
     }
     } 
 
-export { createToken , authorizeCookie, authorizateToken, checkUser}
+export { createToken , authorizeCookie, authorizeToken, checkUser}

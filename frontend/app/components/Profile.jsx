@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Loadingcard from "./Loadingcard";
 import Postcard from "./Postcard";
 
-const Profile = ({ name, desc, profileImage, blog, handleEdit, handleDelete }) => {
+const Profile = ({ name, desc, profileImage, blogs, handleEdit, handleDelete }) => {
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -36,7 +36,7 @@ const Profile = ({ name, desc, profileImage, blog, handleEdit, handleDelete }) =
         ) : (
           // Display Personal Posts once loading is complete
           <div className="flex flex-wrap justify-center gap-5 mx-auto">
-            {blog.map((blogItem, index) => (
+            {blogs.map((blogItem, index) => (
               <Postcard
                 key={index}
                 blog={blogItem}
