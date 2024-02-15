@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs'
 import { createToken } from "../middleware/authToken.js";
 import crypto from "node:crypto"
 import validator from "validator"
+import { sendMail } from "../middleware/emailVerification.js";
 
 export const getAllUser = async(req, res, next) => {
     let users;
@@ -31,7 +32,7 @@ export const getAllUserAdmin = async(req, res, next) => {
     return res.status(200).json({users});
 };
 
-export const getUserById = async(req, res, next) => {
+export const getUserById = async(req, res) => {
     const id = req.user;
     let users;
     let blogs;
@@ -80,22 +81,26 @@ export const signup = async (req, res, next) => {
     const saltRounds = 2;
     const salt = bcrypt.genSaltSync(saltRounds);
     const hashedPassword = bcrypt.hashSync(password, salt);
-
+    
     const user = new User({
         displayName: firstName + " " +lastName,
         firstName,
         lastName,
         email,
         password: hashedPassword,
-        emailToken:crypto.randomBytes(64).toString("hex"),
+        emailToken: null,
         blogs: [],
     });
+    const token = await createToken(user.email);
+    user.emailToken = token
+    console.log("email token:", token);
 
     if (!firstName || !lastName || !password || !email) {
         return res.status(400).json({ message: "All fields must be filled!" });
     }
 
     try {
+        await sendMail(user);
         await user.save();
         
         const responseUser = {

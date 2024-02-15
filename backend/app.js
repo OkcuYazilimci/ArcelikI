@@ -3,9 +3,8 @@ import dotenv from 'dotenv';
 import router from './routes/user-routes.js';
 import blogRouter from './routes/blog-routes.js';
 import logRouter from './routes/logging-router.js';
-
+import emailRouter from './routes/emailVerification-route.js';
 import bodyParser from 'body-parser';
-import YAML from 'yamljs';
 import morgan from 'morgan';
 import connectDB from './config/db.js';
 import cors from 'cors';
@@ -46,6 +45,7 @@ app.use(morgan("combined", {stream: morganStream}))
 
 //app routes
 app.use(express.json());
+app.use("/api-mail", emailRouter),
 app.use("/api-user", router);
 app.use("/api-blog", blogRouter);
 app.use("/api-logging", logRouter);

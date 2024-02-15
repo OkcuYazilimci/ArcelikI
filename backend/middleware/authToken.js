@@ -72,25 +72,34 @@ const authorizeCookie = async (req, res, next) => {
     }
 };
 
-const checkUser = async (req, res ,next) => {
-    const token = req.cookies.jsonwebtoken;
+const authorizeEmail = async (req, res, next) => {
+    try {
+        const emailToken = req.params.emailToken;
+        console.log("email Token ---: ", emailToken);
 
-    if (token) {
-        Jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
+        if (!emailToken) {
+            return res.status(404).json({message:'there is no token'})
+        }
+
+        Jwt.verify(emailToken, process.env.JWT_SECRET, async (err, decoded) => {
             if (err) {
                 console.log(err.message);
-                res.locals.user = null;
-                next();
+                return res.status(401).json({
+                    error: 'Not Authorized, invalid token'
+                });
             } else {
-                const user = await User.findById(decodedToken.userId);
-                res.locals.user = user;
+                console.log("Decoded JWT: ", decoded);
+                req.email = decoded.userId;
+                console.log(req.email);
                 next();
             }
-        })
-    } else {
-        res.locals.user = null;
-        next();
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(401).json({
+            error: 'Not Authorized, verification failed'
+        });
     }
-    } 
+};
 
-export { createToken , authorizeCookie, authorizeToken, checkUser}
+export { createToken , authorizeCookie, authorizeToken, authorizeEmail}
