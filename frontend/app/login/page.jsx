@@ -1,8 +1,9 @@
 'use client'
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
+import { useAuth } from '../../context/AuthContext'
 import { useRouter } from 'next/navigation';
-import { getDecodedToken, setAuthToken } from '../../utils/auth';
-import { parseCookies } from 'nookies';
+
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
@@ -10,6 +11,13 @@ const Login = () => {
   });
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const { user, login } = useAuth();
+
+  useEffect(() => {
+    if (user) {
+      router.push('/');
+    }
+  }, [user, router]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,8 +36,9 @@ const Login = () => {
         credentials: 'include',
         body: JSON.stringify(formData),
       });
-      
+
       if (response.ok) {
+        await login(); // Call login from your context to update user data
         router.push('/'); // Redirect after successful login
       } else {
         console.error('Login failed');
