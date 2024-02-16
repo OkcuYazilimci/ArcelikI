@@ -144,7 +144,9 @@ export const login = async(req, res, next) => {
 
     try {
         const token = await createToken(existingUser._id);
-
+        const idCookie = existingUser._id.toString();
+        console.log("\n ID COOKIE HERE: ",idCookie);
+        
         res.cookie("jsonwebtoken", token, {
             httpOnly:true,
             maxAge: 1000*60*60*24,
@@ -152,6 +154,14 @@ export const login = async(req, res, next) => {
             path: '/',
             secure: true,
         });
+
+        res.cookie("userId", idCookie, {
+            httpOnly: true,
+            maxAge: 1000*60*60*24,
+            sameSite: 'None',
+            path: '/',
+            secure: true,
+        })
 
         return res.status(200).json({
             message: "User logged in"
