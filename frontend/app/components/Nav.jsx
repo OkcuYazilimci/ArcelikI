@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
-import logoImage from '../../public/assets/black.svg';
+import logoImage from '../../public/assets/logo-beyaz.svg';
 
 const Nav = () => {
   const { data: session } = useSession();
@@ -22,7 +22,7 @@ const Nav = () => {
   }, [session]);
 
   return (
-    <nav className="bg-white p-4 shadow-xl bg-opacity-55">
+    <nav className="p-4 shadow-2xl">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo on the left */}
         <Link href="/">
@@ -34,12 +34,12 @@ const Nav = () => {
               alt="logo"
               className="mr-2"
             />
-            <p className="text-black tracking-widest">Arch</p>
+            <p className="text-white tracking-widest">Arch</p>
           </div>
         </Link>
 
         {/* Links in the center */}
-        <div className={`hidden sm:flex gap-8 items-center text-xl flex-grow ${session?.user ? 'justify-center pl-24' : 'justify-center pl-6'}`}>
+        <div className={`hidden sm:flex gap-8 items-center text-xl flex-grow justify-center pl-20`}>
           <Link href="/" className="nav-links">
             Home
           </Link>
@@ -89,7 +89,7 @@ const Nav = () => {
               {/* Add Login Button and Redirect */}
               <Link href="/login"> {/* Replace "/login" with your actual login page path */}
                 <button type="button" className="outline_btn">
-                  Login
+                  Login or Sign Up
                 </button>
               </Link>
             </>

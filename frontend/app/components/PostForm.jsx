@@ -5,10 +5,11 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { useRouter } from "next/navigation";
+import { useCookies } from 'react-cookie';
 
 
 const Form = () => {
-  const { data: session } = useSession(); // Retrieve session information
+  const [cookies, setCookie, removeCookie] = useCookies(['userId']);
   const router = useRouter();
 
   const [formData, setFormData] = useState({
@@ -39,7 +40,7 @@ const Form = () => {
         credentials: 'include',
         body: JSON.stringify({
           ...formData,
-          user: session.user.id,
+          user: cookies.userId,
         }),
       });
 
@@ -76,7 +77,7 @@ const Form = () => {
         </label> */}
 
         <label>
-          <span className='font-satoshi font-semibold text-base text-gray-700'>Title</span>
+          <span className='font-satoshi font-semibold text-base text-white'>Title</span>
           <input
             name='title' // Added 'name' attribute to match state key
             value={formData.title}
@@ -89,7 +90,7 @@ const Form = () => {
         </label>
 
         <label>
-          <span className='font-satoshi font-semibold text-base text-gray-700'>Description</span>
+          <span className='font-satoshi font-semibold text-base text-white'>Description</span>
           <input
             name='description' // Added 'name' attribute to match state key
             value={formData.description}
@@ -116,7 +117,7 @@ const Form = () => {
           />
         </label>*/}
 
-        <div className='flex-end mx-3 mb-5 gap-4'>
+        <div className='flex-end mx-3 mb-5 gap-5'>
           <Link href='/' className='px-5 py-1.5 text-sm border create-button rounded-full bg-white text-black border-black transition-all duration-300 hover:bg-black hover:text-white hover:font-bold inline-block text-center'>
             Cancel
           </Link>

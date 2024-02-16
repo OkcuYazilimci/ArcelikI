@@ -1,14 +1,15 @@
 import LandingPageCarousel from './components/Carousel';
 import Feed from './components/Feed'
-import TypingComponent from './components/HeadText';
+import { TypewriterEffectSmoothDemo } from './components/HeroPage';
 
 export default function Home() {
   
   return (
       <>
-        <div className='flex flex-row flex-center'>
-          <TypingComponent />
-          <LandingPageCarousel />
+        <div className='flex flex-col flex-center'>
+          {/* <TypingComponent />
+          <LandingPageCarousel /> */}
+          <TypewriterEffectSmoothDemo />
         </div>
         {/* <Testcomp /> */}
         <Feed />

@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
       try {
         const response = await fetch(`http://localhost:3000/api-user/${userId}`);
         const data = await response.json();
+        // data.user???
         console.log(data);
         setUser(data);
       } catch (error) {

@@ -2,8 +2,8 @@
 
 import { AuthProvider } from "../../context/AuthContext";
 
-const SessionProvider = ({ children, user, login, logout }) => (
-  <AuthProvider user={user} login={login} logout={logout}>
+const SessionProvider = ({ children, user }) => (
+  <AuthProvider user={user}>
     {children}
   </AuthProvider>
 )

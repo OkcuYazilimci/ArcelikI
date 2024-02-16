@@ -11,8 +11,10 @@
   "dependencies": {
     "@fontsource/roboto": "^5.0.8",
     "@fortawesome/fontawesome-free": "^6.5.1",
+    "clsx": "^2.1.0",
     "cookie": "^0.6.0",
     "embla-carousel-react": "^8.0.0-rc22",
+    "framer-motion": "^11.0.5",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.3",
     "next": "^14.0.4",
@@ -25,7 +27,9 @@
     "react-easy-swipe": "^0.0.23",
     "react-icons": "^5.0.1",
     "react-toastify": "^10.0.4",
-    "swiper": "^11.0.6"
+    "simplex-noise": "^4.0.1",
+    "swiper": "^11.0.6",
+    "tailwind-merge": "^2.2.1"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",
