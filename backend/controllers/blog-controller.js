@@ -41,14 +41,20 @@ export const getAllAdmin = async(req, res, next) => {
 
 export const searchBlog = async (req, res) => {
     const searchTerm = req.query.search;
-    const regexPattern = new RegExp("^" + searchTerm, "i");
 
+    if (searchTerm.length < 3) {
+        return res.status(400).json({ message: "Search term must be at least 3 characters long." });
+    }
+
+    const regexPattern = new RegExp(searchTerm, "i");
+    try {
     const blogResult = await Blog.find({ $or: [
             { title: { $regex: regexPattern } },
-            { description: { $regex: regexPattern } }
+            { description: { $regex: regexPattern } },
+            { userDisplayName: { $regex: regexPattern}}
         ]});
         
-    const userResult = await User.find({ displayName: { $regex: regexPattern }},
+    /*const userResult = await User.find({ displayName: { $regex: regexPattern }},
         {
         password: 0,
         emailToken: 0,
@@ -56,14 +62,15 @@ export const searchBlog = async (req, res) => {
         firstName: 0,
         lastName: 0,
         isEmailVerified: 0,
-        });
+        });*/
 
     const bothResult = {
         blogResult,
-        userResult
     }
 
-    res.status(200).json(bothResult);
+    res.status(200).json(bothResult); } catch(err) {
+        res.status(400).json({message: "Unable to Search"});
+    }
 } 
 
 export const addBlog = async (req, res, next) => {
@@ -102,7 +109,8 @@ export const addBlog = async (req, res, next) => {
         title,
         description,
         image: imageURL,
-        user: userId
+        user: userId,
+        userDisplayName: existingUser.displayName;
     });
         const session = await mongoose.startSession();
         session.startTransaction();
