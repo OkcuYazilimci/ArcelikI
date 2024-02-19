@@ -1,7 +1,7 @@
 import express  from "express";
 import { upload } from "../middleware/multer.js";
 import { authorizeCookie, authorizeToken } from "../middleware/authToken.js";
-import { addBlog, getAllBlogs, updateBlog, getById, deleteBlog, getAllAdmin } from "../controllers/blog-controller.js";
+import { addBlog, getAllBlogs, updateBlog, getById, deleteBlog, getAllAdmin, searchBlog } from "../controllers/blog-controller.js";
 
 const blogRouter = express.Router();
 
@@ -12,6 +12,7 @@ blogRouter.get("/", (req, res) => {
 })
 blogRouter.get("/getAll",authorizeCookie, getAllBlogs);
 blogRouter.get("/getAllAdmin", getAllAdmin);
+blogRouter.get("/search", searchBlog);
 blogRouter.post("/add", authorizeCookie, upload, addBlog); // api-blog/add
 blogRouter.put('/:id', updateBlog); // api-blog/:id (Update button in Collection)
 blogRouter.get("/getById", authorizeCookie, getById); //api-blog/:id (this end-point will be connect with Collection)

@@ -40,10 +40,31 @@ export const getAllAdmin = async(req, res, next) => {
 };
 
 export const searchBlog = async (req, res) => {
-    const search = req;
-    Blog.index
-    console.log(search);
-}
+    const searchTerm = req.query.search;
+    const regexPattern = new RegExp("^" + searchTerm, "i");
+
+    const blogResult = await Blog.find({ $or: [
+            { title: { $regex: regexPattern } },
+            { description: { $regex: regexPattern } }
+        ]});
+        
+    const userResult = await User.find({ displayName: { $regex: regexPattern }},
+        {
+        password: 0,
+        emailToken: 0,
+        createdAt: 0,
+        firstName: 0,
+        lastName: 0,
+        isEmailVerified: 0,
+        });
+
+    const bothResult = {
+        blogResult,
+        userResult
+    }
+
+    res.status(200).json(bothResult);
+} 
 
 export const addBlog = async (req, res, next) => {
     const { title, description} = req.body;
