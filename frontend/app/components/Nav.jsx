@@ -47,7 +47,7 @@ const Nav = () => {
             Create
           </Link>
           <Link href="/profile" className="nav-links">
-            My Collection
+            Collection
           </Link>
           {/* Add other navigation links here */}
         </div>

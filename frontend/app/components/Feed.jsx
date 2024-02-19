@@ -1,10 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Suspense } from 'react';
+import { useRouter } from 'next/navigation';
 import { GET } from '../api/posts/route';
 import Postcard from './Postcard';
-import Link from 'next/link';
 import Loadingcard from './Loadingcard';
 
 // Define the Feed component
@@ -14,9 +13,10 @@ const Feed = () => {
   // State for managing the loading state
   const [isLoading, setIsLoading] = useState(true);
 
+  const router = useRouter();
+
   // Search states
   const [searchText, setSearchText] = useState('');
-  const [searchTimeout, setSearchTimeout] = useState(null);
   const [searchedResults, setSearchedResults] = useState([]);
 
   // Fetch data when the component mounts
@@ -41,63 +41,60 @@ const Feed = () => {
     fetchData();
   }, []);
 
-  const filterPrompts = (searchtext) => {
-    const escapedSearchText = searchtext.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const regex = new RegExp(escapedSearchText, 'i'); // 'i' flag for case-insensitive search
-    return blogData.filter(
-      (item) =>
-        regex.test(item.user.displayName) ||
-        regex.test(item.title) ||
-        regex.test(item.user.email) ||
-        regex.test(item.description)
-    );
+  const handleSearchChange = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/api-blog/search?search=${searchText}`);
+      const data = await response.json();
+  
+      if (response.ok) {
+        // Redirect to search page with the search term
+        router.push(`/search?searchTerm=${searchText}`);
+      } else {
+        console.error('Error fetching search results2:', data.error);
+      }
+    } catch (error) {
+      console.error('Error fetching search results:', error);
+    }
   };
+  
 
-  const handleSearchChange = (e) => {
-    clearTimeout(searchTimeout);
-    setSearchText(e.target.value);
-
-    setSearchTimeout(
-      setTimeout(() => {
-        const searchResult = filterPrompts(e.target.value);
-        setSearchedResults(searchResult);
-      }, 500)
-    );
+  const handleButtonClick = () => {
+    handleSearchChange();
   };
-
-  // Determine which array to use for rendering
-  const renderData = searchText ? searchedResults : blogData;
 
   // Return the JSX for rendering the component
   return (
     <section className="gap-2 mt-16">
+      {/* SEARCH BAR */}
       <div className="search-bar-container flex justify-center items-center gap-2">
         <input
           type="text"
           placeholder="Search for a username or description"
           value={searchText}
-          onChange={handleSearchChange}
+          onChange={(e) => setSearchText(e.target.value)}
           required
           className="search_input peer mb-20"
         />
-        <Link href="/create-post" className="mb-20 border border-gray-300 bg-white rounded-md p-2.5 hidden md:block create-button">
+        <button 
+        onClick={handleButtonClick} 
+        className="mb-20 border border-gray-300 bg-white rounded-md p-2.5 create-button">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 items-center flex" viewBox="0 0 50 50" fill="gray">
-          <path d="M 21 3 C 11.601563 3 4 10.601563 4 20 C 4 29.398438 11.601563 37 21 37 C 24.355469 37 27.460938 36.015625 30.09375 34.34375 L 42.375 46.625 L 46.625 42.375 L 34.5 30.28125 C 36.679688 27.421875 38 23.878906 38 20 C 38 10.601563 30.398438 3 21 3 Z M 21 7 C 28.199219 7 34 12.800781 34 20 C 34 27.199219 28.199219 33 21 33 C 13.800781 33 8 27.199219 8 20 C 8 12.800781 13.800781 7 21 7 Z"></path>
+            <path d="M 21 3 C 11.601563 3 4 10.601563 4 20 C 4 29.398438 11.601563 37 21 37 C 24.355469 37 27.460938 36.015625 30.09375 34.34375 L 42.375 46.625 L 46.625 42.375 L 34.5 30.28125 C 36.679688 27.421875 38 23.878906 38 20 C 38 10.601563 30.398438 3 21 3 Z M 21 7 C 28.199219 7 34 12.800781 34 20 C 34 27.199219 28.199219 33 21 33 C 13.800781 33 8 27.199219 8 20 C 8 12.800781 13.800781 7 21 7 Z"></path>
           </svg>
-        </Link>
+        </button>
       </div>
       <div className="flex justify-center items-center">
-        <Suspense fallback={<div className=""></div>}>
+        {isLoading ? (
+          <Loadingcard />
+        ) : blogData.length === 0 ? (
+          <p className="text-center text-gray-300">There are no posts available.</p>
+        ) : (
           <div className="flex flex-wrap justify-center gap-5 mx-auto">
-            {isLoading ? (
-              <Loadingcard />
-            ) : renderData.length === 0 ? (
-              <p className="text-center text-gray-500">There are no posts available.</p>
-            ) : (
-              renderData.map((blog, index) => <Postcard key={index} blog={blog} />)
-            )}
+            {blogData.map((blog, index) => (
+              <Postcard key={index} blog={blog} />
+            ))}
           </div>
-        </Suspense>
+        )}
       </div>
     </section>
   );
@@ -105,3 +102,4 @@ const Feed = () => {
 
 // Export the Feed component
 export default Feed;
+

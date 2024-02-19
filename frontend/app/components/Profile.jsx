@@ -28,7 +28,7 @@ const Profile = ({ name, desc, profileImage, blogs, handleEdit, handleDelete }) 
         style={{ width: '150px', height: '150px', objectFit: 'cover' }}
       />
       <h1 className="head_text text-white text-center">{name}'s Collection</h1>
-      <p className="mt-4 text-gray-300">{desc}</p>
+      <p className="mt-4 text-gray-300 text-center">{desc}</p>
       <div className='mt-10 post_layout'>
         {isLoading ? (
           // Display loading card while loading
