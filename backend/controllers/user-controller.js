@@ -1,11 +1,8 @@
 import User from "../model/User.js";
-import Blog from "../model/Blog.js";
 import bcrypt from 'bcryptjs'
 import { createToken } from "../middleware/authToken.js";
-import crypto from "node:crypto"
 import validator from "validator"
 import { sendMail } from "../middleware/emailVerification.js";
-import isEmail from "validator/lib/isEmail.js";
 
 export const getAllUser = async(req, res, next) => {
     let users;
@@ -36,7 +33,6 @@ export const getAllUserAdmin = async(req, res, next) => {
 export const getUserById = async(req, res) => {
     const id = req.user;
     let users;
-    let blogs;
     try {
         users = await User.findById(id).select('_id displayName email imageurl blogs')
         .populate({
@@ -181,6 +177,7 @@ export const login = async(req, res, next) => {
         }
 };
 
-export const logout = () => {
-    
+export const logout = (req, res) => {
+    res.clearCookie('jsonwebtoken');
+    res.send('Cookie deleted');
 }

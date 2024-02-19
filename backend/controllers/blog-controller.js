@@ -41,7 +41,7 @@ export const getAllAdmin = async(req, res, next) => {
 
 export const searchBlog = async (req, res) => {
     const search = req;
-
+    Blog.index
     console.log(search);
 }
 
