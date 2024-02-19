@@ -10,6 +10,8 @@ const UserProfile = ({ params }) => {
   const searchParams = useSearchParams();
   const userName = searchParams.get("name");
 
+  const blankUser = "https://i.ibb.co/wQdPNQK/Untitled-design-1.png";
+
   const [userBlogs, setUserBlogs] = useState([]);
   const [userData, setUserData] = useState([]);
 
@@ -41,7 +43,7 @@ const UserProfile = ({ params }) => {
   return (
     <Profile
       name={userData.displayName}
-      profileImage={userData.imageurl}
+      profileImage={userData.imageUrl == null ? blankUser : userData.imageUrl}
       desc={`Welcome to ${userData.displayName}'s personalized profile page. Explore ${userData.displayName}'s exceptional AI Arts and be inspired by the power of their imagination`}
       blog={userBlogs}
     />

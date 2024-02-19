@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useAuth } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Profile from "../components/Profile";
@@ -10,6 +10,9 @@ const MyProfile = () => {
   const [myBlogs, setMyBlogs] = useState([]);
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
+
+  const blankUser = "https://i.ibb.co/wQdPNQK/Untitled-design-1.png";
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -27,10 +30,6 @@ const MyProfile = () => {
   
     fetchBlogs();
   }, []);
-
-  // const handleEdit = (post) => {
-  //   router.push(`/update-prompt?id=${post._id}`);
-  // };
 
   const handleDelete = async (blogId) => {
 
@@ -54,14 +53,14 @@ const MyProfile = () => {
       }
     }
   };
-
+  console.log(userData)
   return (
     <section>
         <Profile
           name={userData.displayName}
-          profileImage={userData.imageUrl}
+          profileImage={userData.imageUrl == null ? blankUser : userData.imageUrl}
           desc='Welcome to your personalized profile page. Share your exceptional AI Arts and inspire others with the power of your imagination'
-          blogs={userData.blogs}
+          blogs={myBlogs}
           // handleEdit={handleEdit}
           handleDelete={handleDelete}
         />

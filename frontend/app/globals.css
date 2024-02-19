@@ -100,7 +100,7 @@ body {
 }
 
 .outline_btn {
-  @apply rounded-full border border-gray-500 bg-black py-1.5 px-5 text-white transition-all hover:border-white hover:text-white text-center text-sm font-inter flex items-center justify-center;
+  @apply rounded-full border border-gray-500 bg-black text-white transition-all hover:border-white hover:text-white text-center text-sm font-inter flex items-center justify-center;
 }
 
 .head_text {
@@ -294,7 +294,7 @@ body {
 
 /* Add hover effect */
 .create-button:hover {
-  border-color: rgb(255, 255, 255);
+  border-color: rgb(160, 160, 160);
   box-shadow: 0 0 10px rgb(34, 34, 34);
 }
 
@@ -389,4 +389,25 @@ body {
   opacity: 0.0;
   left: 40%;
   transform: translate(-50%, -50%) rotateY(-10deg) translateZ(-200px);
+}
+
+.bn3 {
+  display: inline-block;
+  padding: 0.5em 1.7em;
+  margin: 0 0.1em 0.1em 0;
+  border: 0.16em solid rgb(255, 255, 255);
+  border-radius: 2em;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  color: #ffffff;
+  text-shadow: 0 0.04em 0.04em rgba(255, 255, 255, 0.253);
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.bn3:hover {
+  color: black;
+  background-color: rgb(255, 255, 255);
 }

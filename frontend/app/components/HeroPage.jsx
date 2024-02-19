@@ -32,8 +32,8 @@ export function TypewriterEffectSmoothDemo() {
     },
   ];
   return (
-    <div className="flex flex-col items-center justify-center mt-20 border border-gray-600 rounded-xl w-3/4 h-48 backdrop-blur-2xl backdrop-brightness-200 backdrop-opacity-25">
-      <TypewriterEffectSmooth words={user ? greeting : words} />
+    <div className="flex flex-col items-center hero_page justify-center mt-20 rounded-xl w-3/4 h-fit">
+      <TypewriterEffectSmooth words={user ? greeting : words} className=""/>
     </div>
   );
 }

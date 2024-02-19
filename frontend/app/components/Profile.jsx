@@ -27,14 +27,14 @@ const Profile = ({ name, desc, profileImage, blogs, handleEdit, handleDelete }) 
         className="rounded-full border-2 border-gray-500 shadow-xl mt-10"
         style={{ width: '150px', height: '150px', objectFit: 'cover' }}
       />
-      <h1 className="head_text purple_gradient text-center">{name}'s Collection</h1>
-      <p className="mt-4">{desc}</p>
+      <h1 className="head_text text-white text-center">{name}'s Collection</h1>
+      <p className="mt-4 text-gray-300">{desc}</p>
       <div className='mt-10 post_layout'>
-        {/* Display loading card while loading */}
         {isLoading ? (
+          // Display loading card while loading
           <Loadingcard />
-        ) : (
-          // Display Personal Posts once loading is complete
+        ) : blogs && blogs.length > 0 ? (
+          // Display Personal Posts once loading is complete and blogs exist
           <div className="flex flex-wrap justify-center gap-5 mx-auto">
             {blogs.map((blogItem, index) => (
               <Postcard
@@ -45,6 +45,9 @@ const Profile = ({ name, desc, profileImage, blogs, handleEdit, handleDelete }) 
               />
             ))}
           </div>
+        ) : (
+          // Display message when blogs are undefined or empty
+          <p className="text-center text-gray-500 mt-5">There are no posts available.</p>
         )}
       </div>
     </section>
