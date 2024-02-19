@@ -74,8 +74,10 @@ export const searchBlog = async (req, res) => {
 } 
 
 export const addBlog = async (req, res, next) => {
+
     const { title, description} = req.body;
     const userId = req.user;
+
     console.log(userId);
 
     let existingUser;
@@ -89,7 +91,9 @@ export const addBlog = async (req, res, next) => {
     if (!existingUser) {
         return res.status(400).json({ message: "Unable to find user by this ID" });
     }
+
     try {
+
         const response = await generateImage(description);
         const firstItem = response.openai.items[0];
         console.log(firstItem);
@@ -110,8 +114,9 @@ export const addBlog = async (req, res, next) => {
         description,
         image: imageURL,
         user: userId,
-        userDisplayName: existingUser.displayName;
+        userDisplayName: existingUser.displayName
     });
+
         const session = await mongoose.startSession();
         session.startTransaction();
         await blog.save({ session });
@@ -119,6 +124,7 @@ export const addBlog = async (req, res, next) => {
         await existingUser.save({ session });
         await session.commitTransaction();
         console.log(`blog saved to MongoDB succesfully`)
+
     } catch (err) {
         console.log(err);
         return res.status(500).json({ message: "Error saving blog" });
