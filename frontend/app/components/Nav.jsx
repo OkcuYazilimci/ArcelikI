@@ -12,6 +12,7 @@ const Nav = () => {
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
   const { user, logout } = useAuth();
+  const blankUser = "https://i.ibb.co/wQdPNQK/Untitled-design-1.png";
   
   const router = useRouter();  // Get the router instance
 
@@ -38,7 +39,7 @@ const Nav = () => {
         </Link>
 
         {/* Links in the center */}
-        <div className={`hidden sm:flex gap-8 items-center text-xl flex-grow justify-center`}>
+        <div className={`hidden sm:flex gap-8 items-center text-xl justify-center ml-20`}>
           <Link href="/" className="nav-links">
             Home
           </Link>
@@ -52,9 +53,12 @@ const Nav = () => {
         </div>
 
         {user ? (
-          <button type="button" className="bn3" onClick={handleLogout}>
-            Sign out
-          </button>
+          <div className="flex items-center gap-1">
+            <button type="button" className="bn3" onClick={handleLogout}>
+              Sign out
+            </button>
+            <img src={user.imageUrl == null ? blankUser : user.imageUrl} alt="Profile Picture" className="w-10 h-10 rounded-full mb-1 border-2 border-white"/>
+          </div>
         ) : (
           <Link href="/login"> {/* Replace "/login" with your actual login page path */}
             <button type="button" className="bn3">
