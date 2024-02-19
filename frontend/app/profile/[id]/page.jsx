@@ -15,7 +15,7 @@ const UserProfile = ({ params }) => {
 
   useEffect(() => {
     const fetchBlogs = async () => {
-      const response = await fetch(`http://localhost:3000/api-blog/getById`, {
+      const response = await fetch(`http://localhost:3000/api-blog/${params.id}`, {
       credentials: 'include'});
       const data = await response.json();
 
@@ -27,7 +27,7 @@ const UserProfile = ({ params }) => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const response = await fetch(`http://localhost:3000/api-user/getById`, {
+      const response = await fetch(`http://localhost:3000/api-user/${params.id}`, {
         credentials: 'include'
       });
       const data = await response.json();
