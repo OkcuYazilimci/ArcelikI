@@ -34,18 +34,119 @@ const Users = () => {
 
   return (
     <>
-      <h1>User Data</h1>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <ul>
-          {userData.map((user, index) => (
-            <li key={index}>
-              Name: {user.name}, Email: {user.email}
-            </li>
-          ))}
-        </ul>
-      )}
+      Desktop Navigation
+        <div className="flex items-center">
+          {session?.user ? (
+            <div className="flex items-center gap-3 md:gap-5">
+              <button type="button" onClick={signOut} className="outline_btn hidden md:block">
+                Sign Out
+              </button>
+
+              <Link href="/profile">
+                <Image
+                  src={session?.user.image}
+                  width={37}
+                  height={37}
+                  className="rounded-full hidden md:block"
+                  alt="profile"
+                />
+              </Link>
+            </div>
+          ) : (
+            <>
+              {/* {providers &&
+                Object.values(providers).map((provider) => (
+                  <button
+                    type="button"
+                    key={provider.name}
+                    onClick={() => {
+                      signIn(provider.id);
+                    }}
+                    className="outline_btn"
+                  >
+                    Sign in
+                  </button>
+                ))} */}
+              
+              {/* Add Login Button and Redirect */}
+              <Link href="/login"> {/* Replace "/login" with your actual login page path */}
+                <button type="button" className="outline_btn">
+                  Login or Sign Up
+                </button>
+              </Link>
+            </>
+          )}
+        </div>
+
+        {/* Mobile Navigation */}
+        <div className="sm:hidden flex relative">
+          {/* Mobile user actions */}
+          {session?.user ? (
+            <div className="flex">
+              <Image
+                src={session?.user.image}
+                width={37}
+                height={37}
+                className="rounded-full"
+                alt="profile"
+                onClick={() => setToggleDropdown(!toggleDropdown)}
+              />
+
+              {toggleDropdown && (
+                <div className="dropdown">
+                  <Link
+                    href="/profile"
+                    className="dropdown_link"
+                    onClick={() => setToggleDropdown(false)}
+                  >
+                    My Collection
+                  </Link>
+                  <Link
+                    href="/create-post"
+                    className="dropdown_link"
+                    onClick={() => setToggleDropdown(false)}
+                  >
+                    Create Post
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setToggleDropdown(false);
+                      signOut();
+                    }}
+                    className="mt-5 w-full black_btn"
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            // Mobile sign-in buttons
+            <>
+              {providers &&
+                Object.values(providers).map((provider) => (
+                  <button
+                    type="button"
+                    key={provider.name}
+                    onClick={() => {
+                      signIn(provider.id);
+                    }}
+                    className="outline_btn"
+                  >
+                    Sign in
+                  </button>
+                ))}
+              
+              {/* Add Mobile Login Button and Redirect */}
+              <Link href="/login">
+                <button type="button" className="outline_btn">
+                  Login
+                </button>
+              </Link>
+            </>
+          )}
+        </div>
     </>
   );
 };

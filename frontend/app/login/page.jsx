@@ -38,6 +38,8 @@ const Login = () => {
       });
 
       if (response.ok) {
+        const data = await response.json(); 
+        await login(data.user);
         router.push('/'); // Redirect after successful login
       } else {
         console.error('Login failed');

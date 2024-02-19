@@ -4,22 +4,21 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 import logoImage from '../../public/assets/logo-beyaz.svg';
 
 const Nav = () => {
-  const { data: session } = useSession();
-  const [providers, setProviders] = useState(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
-  useEffect(() => {
-    // Fetch providers for sign-in
-    const fetchData = async () => {
-      const res = await getProviders();
-      setProviders(res);
-    };
-    fetchData();
-  }, [session]);
+  const { user, logout } = useAuth();
+  
+  const router = useRouter();  // Get the router instance
+
+  const handleLogout = async () => {
+    await logout();
+    router.push('/');  // Reload the page after logout
+  };
 
   return (
     <nav className="p-4 shadow-2xl">
@@ -52,119 +51,18 @@ const Nav = () => {
           {/* Add other navigation links here */}
         </div>
 
-        {/* Desktop Navigation */}
-        <div className="flex items-center">
-          {session?.user ? (
-            <div className="flex items-center gap-3 md:gap-5">
-              <button type="button" onClick={signOut} className="outline_btn hidden md:block">
-                Sign Out
-              </button>
-
-              <Link href="/profile">
-                <Image
-                  src={session?.user.image}
-                  width={37}
-                  height={37}
-                  className="rounded-full hidden md:block"
-                  alt="profile"
-                />
-              </Link>
-            </div>
-          ) : (
-            <>
-              {/* {providers &&
-                Object.values(providers).map((provider) => (
-                  <button
-                    type="button"
-                    key={provider.name}
-                    onClick={() => {
-                      signIn(provider.id);
-                    }}
-                    className="outline_btn"
-                  >
-                    Sign in
-                  </button>
-                ))} */}
-              
-              {/* Add Login Button and Redirect */}
-              <Link href="/login"> {/* Replace "/login" with your actual login page path */}
-                <button type="button" className="outline_btn">
-                  Login or Sign Up
-                </button>
-              </Link>
-            </>
-          )}
-        </div>
-
-        {/* Mobile Navigation */}
-        <div className="sm:hidden flex relative">
-          {/* Mobile user actions */}
-          {session?.user ? (
-            <div className="flex">
-              <Image
-                src={session?.user.image}
-                width={37}
-                height={37}
-                className="rounded-full"
-                alt="profile"
-                onClick={() => setToggleDropdown(!toggleDropdown)}
-              />
-
-              {toggleDropdown && (
-                <div className="dropdown">
-                  <Link
-                    href="/profile"
-                    className="dropdown_link"
-                    onClick={() => setToggleDropdown(false)}
-                  >
-                    My Collection
-                  </Link>
-                  <Link
-                    href="/create-post"
-                    className="dropdown_link"
-                    onClick={() => setToggleDropdown(false)}
-                  >
-                    Create Post
-                  </Link>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setToggleDropdown(false);
-                      signOut();
-                    }}
-                    className="mt-5 w-full black_btn"
-                  >
-                    Sign Out
-                  </button>
-                </div>
-              )}
-            </div>
-          ) : (
-            // Mobile sign-in buttons
-            <>
-              {providers &&
-                Object.values(providers).map((provider) => (
-                  <button
-                    type="button"
-                    key={provider.name}
-                    onClick={() => {
-                      signIn(provider.id);
-                    }}
-                    className="outline_btn"
-                  >
-                    Sign in
-                  </button>
-                ))}
-              
-              {/* Add Mobile Login Button and Redirect */}
-              <Link href="/login">
-                <button type="button" className="outline_btn">
-                  Login
-                </button>
-              </Link>
-            </>
-          )}
-        </div>
+        {/* WHATS WRONG HERE */}
+        {user ? (
+          <button type="button" className="outline_btn" onClick={handleLogout}>
+            Sign out
+          </button>
+        ) : (
+          <Link href="/login"> {/* Replace "/login" with your actual login page path */}
+            <button type="button" className="outline_btn">
+              Login or Sign Up
+            </button>
+          </Link>
+        )}
       </div>
     </nav>
   );
