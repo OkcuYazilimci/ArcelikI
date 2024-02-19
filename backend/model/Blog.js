@@ -25,4 +25,7 @@ const blogSchema = new Schema({
         default: Date.now(),
     },
 })
+
+blogSchema.index({ title: 'text', description: 'text' });
+
 export default mongoose.model("Blog", blogSchema);

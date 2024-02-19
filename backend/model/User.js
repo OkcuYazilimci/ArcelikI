@@ -44,4 +44,6 @@ const userSchema = new Schema({
     blogs:[{type: mongoose.Types.ObjectId,ref:"Blog", required: false}],
 })
 
+userSchema.index({ displayName: 'text' });
+
 export default mongoose.model("User", userSchema); //it will  be stored as users in mongo DB
