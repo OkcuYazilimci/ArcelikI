@@ -38,7 +38,6 @@ const Login = () => {
       });
 
       if (response.ok) {
-        await login(); // Call login from your context to update user data
         router.push('/'); // Redirect after successful login
       } else {
         console.error('Login failed');

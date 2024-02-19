@@ -2,20 +2,26 @@
 
 // AuthContext.js
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { useCookies } from 'react-cookie';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [cookies, setCookie, removeCookie] = useCookies(['userId']);
 
   useEffect(() => {
-    const fetchUser = async (userId) => {
+    const fetchUser = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api-user/${userId}`);
+        const response = await fetch(`http://localhost:3000/api-user/getById`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(formData),
+      });
         const data = await response.json();
         // data.user???
+        // Credentials include - getbyId
         console.log(data);
         setUser(data);
       } catch (error) {
@@ -23,25 +29,17 @@ export const AuthProvider = ({ children }) => {
       }
     };
 
-    // Check if userId cookie exists
-    if (cookies.userId) {
-      fetchUser(cookies.userId);
-    }
-  }, [cookies.userId]);
+
+  }, []);
 
   const login = async () => {
-    const userIdFromCookie = cookies.userId;
-
-    if (userIdFromCookie) {
-      await fetchUser(userIdFromCookie);
-    } else {
-      console.error('No userId found in cookies');
-    }
+      await fetchUser();
   };
 
   const logout = () => {
     // Remove userId from cookies
     removeCookie('userId', { path: '/' });
+    removeCookie('jsonwebtoken', { path: '/' });
 
     // Remove user from context
     setUser(null);
@@ -50,7 +48,7 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
       {children}
-    </AuthContext.Provider>
+    </AuthContext.Provider>  
   );
 };
 
