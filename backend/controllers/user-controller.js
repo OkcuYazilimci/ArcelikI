@@ -52,6 +52,27 @@ export const getUserById = async(req, res) => {
     });
 };
 
+export const myProfile = async(req, res) => {
+    const id = req.params.id;
+    let users;
+    try {
+        users = await User.findById(id).select('_id displayName email imageurl blogs')
+        .populate({
+            path: 'blogs',
+            select: '_id title description image createdAt', 
+        });
+    } catch (err) {
+        res.status(401).json({ message: "Problem Occured while getting Profile"});
+    }
+    if(!users) {
+        return res.status(404).json({message: "User could not found!"})
+    }
+   
+    return res.status(200).json({
+        users
+    });
+};
+
 export const signup = async (req, res, next) => {
     const {firstName, lastName, email, password} = req.body;
 
@@ -148,14 +169,6 @@ export const login = async(req, res, next) => {
             path: '/',
             secure: true,
         });
-
-        /*res.cookie("userId", idCookie, {
-            httpOnly: true,
-            maxAge: 1000*60*60*24,
-            sameSite: 'None',
-            path: '/',
-            secure: true,
-        })*/
 
         const userResponse = {
             _id: existingUser._id,

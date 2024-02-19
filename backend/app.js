@@ -49,3 +49,5 @@ app.use("/api-mail", emailRouter);
 app.use("/api-user", router);
 app.use("/api-blog", blogRouter);
 app.use("/api-logging", logRouter);
+
+export default app;
