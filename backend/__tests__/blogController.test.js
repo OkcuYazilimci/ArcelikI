@@ -1,4 +1,4 @@
-import supertest from 'supertest';
+const supertest = require('supertest');
 import app from '../app.js'; // Adjust this path to where your Express app is initialized
 import Blog from '../model/Blog.js'; // Adjust path to your Blog model
 import User from '../model/User.js'; // Adjust path to your User model
