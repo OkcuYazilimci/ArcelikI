@@ -5,6 +5,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+
   useEffect(() => {
   const fetchUserData = async () => {
     try {
@@ -25,9 +26,21 @@ export const AuthProvider = ({ children }) => {
     setUser(user);
   };
 
-  const logout = () => {
-    // Logout logic
+  const logout = async () => {
+    try {
+      // You may need to send a logout request to your server
+      await fetch('http://localhost:3000/api-user/logout', {
+        method: 'POST',
+        credentials: 'include'
+      });
+
+      // Set user state to null after successful logout
+      setUser(null);
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
   };
+
 
   return (
     <AuthContext.Provider value={{ user, login, logout }}>

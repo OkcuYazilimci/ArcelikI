@@ -45,6 +45,8 @@ const Postcard = ({ blog, handleDelete }) => {
   };
 
   const formattedTimeAgo = timeAgo(blog.createdAt);
+  const blankUser = "https://i.ibb.co/wQdPNQK/Untitled-design-1.png";
+
 
   // console.log(session?.user.id)
   // console.log(blog.user._id)
@@ -54,7 +56,7 @@ const Postcard = ({ blog, handleDelete }) => {
       <div className="flex items-center mb-3"
       >
         <img
-          src={blog.user?.imageurl}
+          src={blog.user?.imageurl == null ? blankUser : blog.user?.imageurl}
           height={30}
           width={30}
           alt=""

@@ -4,10 +4,19 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useAuth } from '../../context/AuthContext'
 import { useState } from 'react';
 
 const Signup = () => {
   const router = useRouter();
+
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (user) {
+      router.push('/');
+    }
+  }, [user, router]);
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -40,7 +49,7 @@ const Signup = () => {
       if (response.ok) {
         console.log('User signed up successfully:', data.user);
         toast.success('User signed up successfully');
-        router.push('/');
+        router.push('/login');
       } else if (response.status === 400 && data.message.includes('User already exists')) {
         console.error('User with the same email already exists');
         toast.error('User with the same email already exists');

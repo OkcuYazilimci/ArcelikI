@@ -61,6 +61,8 @@ const Form = () => {
 
   return (
     <section className='w-full max-w-full flex items-center justify-center flex-col mt-10'>
+      <p className='head_text text-white'>Create a post</p>
+      <p className='text-gray-300 mt-5'>Share your exceptional AI Arts and inspire others with the power of your imagination!</p>
       <form onSubmit={handleSubmit} className='mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism'>
         {/* <label>
           <span className='font-satoshi font-semibold text-base text-gray-700'>
