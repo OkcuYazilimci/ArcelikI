@@ -15,21 +15,17 @@ const blogSchema = new Schema({
         type: String,
         required: false,
     },
-    user: {
+    user: [{
         type: mongoose.Types.ObjectId,
         ref:"User",
         required: false,
-    },
-    userDisplayName: {
-        type: String,
-        required: false
-    },
+    }],
     createdAt: {
         type: Date,
         default: Date.now(),
     },
 })
 
-//blogSchema.index({ title: 'text', description: 'text' });
+blogSchema.index({ title: 'text', description: 'text'});
 
 export default mongoose.model("Blog", blogSchema);

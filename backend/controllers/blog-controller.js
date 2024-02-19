@@ -48,11 +48,17 @@ export const searchBlog = async (req, res) => {
 
     const regexPattern = new RegExp(searchTerm, "i");
     try {
-    const blogResult = await Blog.find({ $or: [
-            { title: { $regex: regexPattern } },
-            { description: { $regex: regexPattern } },
-            { userDisplayName: { $regex: regexPattern}}
-        ]});
+        const matchingUsers = await User.find({ displayName: { $regex: regexPattern } }, '_id');
+        const userIds = matchingUsers.map(user => user._id);
+    
+        // Step 2: Find blogs that match the title/description or are authored by one of the matching users
+        const blogResult = await Blog.find({
+            $or: [
+                { title: { $regex: regexPattern } },
+                { description: { $regex: regexPattern } },
+                { user: { $in: userIds } } // Assuming 'user' refers to a single userId in Blog schema
+            ]
+        }).populate('user', 'displayName');
         
     /*const userResult = await User.find({ displayName: { $regex: regexPattern }},
         {
@@ -114,7 +120,6 @@ export const addBlog = async (req, res, next) => {
         description,
         image: imageURL,
         user: userId,
-        userDisplayName: existingUser.displayName
     });
 
         const session = await mongoose.startSession();
