@@ -43,7 +43,6 @@ export const searchBlog = async (req, res) => {
     const search = req;
 
     console.log(search);
-    
 }
 
 export const addBlog = async (req, res, next) => {

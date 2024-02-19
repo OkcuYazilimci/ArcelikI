@@ -5,6 +5,7 @@ import { createToken } from "../middleware/authToken.js";
 import crypto from "node:crypto"
 import validator from "validator"
 import { sendMail } from "../middleware/emailVerification.js";
+import isEmail from "validator/lib/isEmail.js";
 
 export const getAllUser = async(req, res, next) => {
     let users;
@@ -37,14 +38,11 @@ export const getUserById = async(req, res) => {
     let users;
     let blogs;
     try {
-        users = await User.findById(id).select('-_id displayName email imageurl blogs')
+        users = await User.findById(id).select('_id displayName email imageurl blogs')
         .populate({
             path: 'blogs',
-            select: 'title description imageurl', 
+            select: '_id title description image createdAt', 
         });
-
-        blogs = await Blog.find({ user: id }).select('_id title description image createdAt');
-
         console.log(users);
     } catch (err) {
         console.log(err);
@@ -54,8 +52,7 @@ export const getUserById = async(req, res) => {
     }
    
     return res.status(200).json({
-        users,
-        blogs
+        users
     });
 };
 
@@ -119,6 +116,7 @@ export const signup = async (req, res, next) => {
 };
 
 export const login = async(req, res, next) => {
+    
     const {email, password} = req.body;
     
     let existingUser;
@@ -155,16 +153,26 @@ export const login = async(req, res, next) => {
             secure: true,
         });
 
-        res.cookie("userId", idCookie, {
+        /*res.cookie("userId", idCookie, {
             httpOnly: true,
             maxAge: 1000*60*60*24,
             sameSite: 'None',
             path: '/',
             secure: true,
-        })
+        })*/
+
+        const userResponse = {
+            _id: existingUser._id,
+            displayName: existingUser.displayName,
+            email: existingUser.email,
+            imageurl: existingUser.imageurl,
+            blogs: existingUser.blogs,
+            createdAt: existingUser.createdAt,
+            isEmailVerified: existingUser.isEmailVerified
+        };
 
         return res.status(200).json({
-            message: "User logged in"
+            user: userResponse
         });
 
         } catch(tokenError){

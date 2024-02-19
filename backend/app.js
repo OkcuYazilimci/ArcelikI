@@ -9,7 +9,7 @@ import morgan from 'morgan';
 import connectDB from './config/db.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import { saveLogs} from "./controllers/log-controller.js"
+import { saveLogs} from "./controllers/log-controller.js";
 
 const app = express();
 
@@ -45,7 +45,7 @@ app.use(morgan("combined", {stream: morganStream}))
 
 //app routes
 app.use(express.json());
-app.use("/api-mail", emailRouter),
+app.use("/api-mail", emailRouter);
 app.use("/api-user", router);
 app.use("/api-blog", blogRouter);
 app.use("/api-logging", logRouter);
