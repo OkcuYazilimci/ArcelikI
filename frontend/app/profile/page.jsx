@@ -63,6 +63,7 @@ const MyProfile = () => {
           blogs={myBlogs}
           // handleEdit={handleEdit}
           handleDelete={handleDelete}
+          isVerified={userData.isVerified}
         />
     </section>
   );

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Loadingcard from "./Loadingcard";
 import Postcard from "./Postcard";
 
-const Profile = ({ name, desc, profileImage, blogs, handleEdit, handleDelete }) => {
+const Profile = ({ name, desc, profileImage, blogs, handleEdit, handleDelete, isVerified }) => {
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -27,7 +27,7 @@ const Profile = ({ name, desc, profileImage, blogs, handleEdit, handleDelete }) 
         className="rounded-full border-2 border-gray-500 shadow-xl mt-10"
         style={{ width: '150px', height: '150px', objectFit: 'cover' }}
       />
-      <h1 className="head_text text-white text-center">{name}'s Collection</h1>
+      <h1 className="head_text text-white text-center">{name}'s Collection <br /> {isVerified === true ? (<span className="text-green-500">Verified</span>) : <span className="text-red-500">Not Verified</span>}</h1>
       <p className="mt-4 text-gray-300 text-center">{desc}</p>
       <div className='mt-10 post_layout'>
         {isLoading ? (
