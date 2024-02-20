@@ -21,7 +21,6 @@ const MyProfile = () => {
           credentials: 'include'
         });
         const data = await response.json();
-
         setUserData(data.users);
         setMyBlogs(data.users.blogs);
       } catch (error) {
