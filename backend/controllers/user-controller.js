@@ -149,9 +149,9 @@ export const login = async(req, res, next) => {
     
     const isPasswordCorrect = bcrypt.compareSync(password, existingUser.password);
     
-    /*if (!existingUser.isEmailVerified) {
+    if (!existingUser.isEmailVerified) {
         return res.status(400).json({ message: "Email is not verified! "});
-    }*/
+    }
 
     if(!isPasswordCorrect) {
         return res.status(400).json({ message: "Incorrect Password" })

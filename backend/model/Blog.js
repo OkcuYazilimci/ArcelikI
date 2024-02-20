@@ -15,11 +15,11 @@ const blogSchema = new Schema({
         type: String,
         required: false,
     },
-    user: [{
+    user: {
         type: mongoose.Types.ObjectId,
         ref:"User",
         required: false,
-    }],
+    },
     createdAt: {
         type: Date,
         default: Date.now(),

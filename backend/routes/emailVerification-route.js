@@ -4,6 +4,6 @@ import { authorizeEmail } from "../middleware/authToken.js";
 
 const emailRouter = express.Router();
 
-emailRouter.post("/:emailToken", authorizeEmail, verifyEmail);
+emailRouter.get("/emailToken", authorizeEmail, verifyEmail);
 
 export default emailRouter;

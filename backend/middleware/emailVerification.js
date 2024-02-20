@@ -18,6 +18,7 @@ const verifyEmail = async (req, res) => {
             await user.save();
 
             res.status(200).json({
+                message: "Email Verifed! Now you can Login",
                 displayName: user.displayName,
                 email: user.email,
                 isEmailVerified: user.isEmailVerified
@@ -48,7 +49,7 @@ const sendMail = (user) => {
         from: '<gereksiz.umutuygun@gmail.com>',
         to: user.email,
         subject: 'ArchAI mail verification',
-        html: `http://localhost:3000/api-mail/${user.emailToken}`,
+        html: `http://localhost:3000/api-mail/emailToken?emailToken=${user.emailToken}`,
     };
 
     transporter.sendMail(mailOptions, (error, info) => {

@@ -74,7 +74,7 @@ const authorizeCookie = async (req, res, next) => {
 
 const authorizeEmail = async (req, res, next) => {
     try {
-        const emailToken = req.params.emailToken;
+        const emailToken = req.query.emailToken;
         console.log("email Token ---: ", emailToken);
 
         if (!emailToken) {

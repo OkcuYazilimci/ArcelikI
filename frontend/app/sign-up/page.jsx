@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from '../../context/AuthContext'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const Signup = () => {
   const router = useRouter();
