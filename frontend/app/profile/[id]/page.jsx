@@ -21,23 +21,11 @@ const UserProfile = ({ params }) => {
       credentials: 'include'});
       const data = await response.json();
 
-      setUserBlogs(data.blogs);
+      setUserBlogs(data.users.blogs);
+      setUserData(data.users)
     };
 
     fetchBlogs();
-  }, [params.id]);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const response = await fetch(`http://localhost:3000/api-user/${params.id}`, {
-        credentials: 'include'
-      });
-      const data = await response.json();
-
-      setUserData(data);
-    };
-
-   fetchUser();
   }, [params.id]);
 
   return (
