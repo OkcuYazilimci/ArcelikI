@@ -50,7 +50,7 @@ const authorizeCookie = async (req, res, next) => {
         const token = req.cookies.jsonwebtoken;
 
         if (!token) {
-            return res.redirect(process.env.CLIENT_LOGIN);
+            res.status(404).json({message: "No Token Available!"})
         }
 
         Jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
