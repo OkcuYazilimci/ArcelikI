@@ -1,13 +1,9 @@
-"use client";
-
 import { usePathname, useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import { useAuth } from "@/context/AuthContext";
 
 // Define the Postcard component
 const Postcard = ({ blog, handleDelete }) => {
 
-  const { data: session } = useSession();
   const pathName = usePathname();
   const router = useRouter();
   const { user } = useAuth();
