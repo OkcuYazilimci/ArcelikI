@@ -21,8 +21,8 @@ const MyProfile = () => {
           credentials: 'include'
         });
         const data = await response.json();
-        setUserData(data.users);
-        setMyBlogs(data.blogs);
+        setUserData(data.user);
+        setMyBlogs(data.users.blogs);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -30,6 +30,7 @@ const MyProfile = () => {
   
     fetchBlogs();
   }, []);
+
 
   const handleDelete = async (blogId) => {
 
