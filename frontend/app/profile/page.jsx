@@ -1,9 +1,10 @@
 "use client";
 
 import { useAuth } from "@/context/AuthContext";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Profile from "../components/Profile";
+import Loading from "./loading";
 
 const MyProfile = () => {
   const router = useRouter();
@@ -57,6 +58,7 @@ const MyProfile = () => {
 
   return (
     <section>
+      <Suspense fallback={<Loading />}>
         <Profile
           name={userData.displayName}
           profileImage={userData.imageUrl == null ? blankUser : userData.imageUrl}
@@ -66,6 +68,7 @@ const MyProfile = () => {
           handleDelete={handleDelete}
           isVerified={userData.isEmailVerified}
         />
+      </Suspense>
     </section>
   );
 };

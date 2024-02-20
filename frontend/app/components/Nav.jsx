@@ -57,7 +57,9 @@ const Nav = () => {
             <button type="button" className="bn3" onClick={handleLogout}>
               Sign out
             </button>
-            <img src={user.imageUrl == null ? blankUser : user.imageUrl} alt="Profile Picture" className="w-10 h-10 rounded-full mb-1 border-2 border-white"/>
+            <Link href="/profile">
+              <img src={user.imageUrl == null ? blankUser : user.imageUrl} alt="Profile Picture" className="w-10 h-10 rounded-full mb-1 border-2 border-white hover:border-gray-400 cursor-pointer transition"/>
+            </Link>
           </div>
         ) : (
           <Link href="/login"> {/* Replace "/login" with your actual login page path */}

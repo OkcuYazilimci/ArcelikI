@@ -47,6 +47,13 @@ const Feed = () => {
     // Redirect to search page with the search term
     router.push(`/search?searchTerm=${searchText}`);
   };
+
+  const handleEnterKeyPress = (e) => {
+    // Trigger search if Enter key is pressed
+    if (e.key === 'Enter') {
+      handleButtonClick();
+    }
+  };
   
 
   // Return the JSX for rendering the component
@@ -59,6 +66,7 @@ const Feed = () => {
           placeholder="Search for a username or description"
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
+          onKeyDown={handleEnterKeyPress}
           required
           className="search_input peer mb-20"
         />

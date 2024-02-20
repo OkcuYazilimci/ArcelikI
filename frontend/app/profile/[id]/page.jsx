@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 import Profile from "../../components/Profile";
+import Loading from "../loading";
 
 const UserProfile = ({ params }) => {
 
@@ -40,13 +41,15 @@ const UserProfile = ({ params }) => {
   }, [params.id]);
 
   return (
-    <Profile
-      name={userData.displayName}
-      profileImage={userData.imageUrl == null ? blankUser : userData.imageUrl}
-      desc={`Welcome to ${userData.displayName}'s personalized profile page. Explore ${userData.displayName}'s exceptional AI Arts and be inspired by the power of their imagination`}
-      blogs={userBlogs}
-      isVerified={userData.isEmailVerified}
-    />
+    <Suspense fallback={<Loading />}>
+      <Profile
+        name={userData.displayName}
+        profileImage={userData.imageUrl == null ? blankUser : userData.imageUrl}
+        desc={`Welcome to ${userData.displayName}'s personalized profile page. Explore ${userData.displayName}'s exceptional AI Arts and be inspired by the power of their imagination`}
+        blogs={userBlogs}
+        isVerified={userData.isEmailVerified}
+      />
+    </Suspense>
   );
 };
 
