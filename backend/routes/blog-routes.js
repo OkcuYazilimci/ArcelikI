@@ -5,12 +5,7 @@ import { addBlog, getAllBlogs, updateBlog, getById, deleteBlog, getAllAdmin, sea
 
 const blogRouter = express.Router();
 
-blogRouter.get("/", (req, res) => {
-    res.render("login", {
-        layout: "login"
-    })
-})
-blogRouter.get("/getAll",authorizeCookie, getAllBlogs);
+blogRouter.get("/getAll", authorizeCookie, getAllBlogs);
 blogRouter.get("/getAllAdmin", getAllAdmin);
 blogRouter.get("/search", searchBlog);
 blogRouter.get("/getById", authorizeCookie, getById); //api-blog/:id (this end-point will be connect with Collection)
