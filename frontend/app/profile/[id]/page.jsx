@@ -33,7 +33,7 @@ const UserProfile = ({ params }) => {
       credentials: 'include'});
       const data = await response.json();
       console.log("Blog fetching: ", data);
-      setUserBlogs(data.users.blogs);
+      setUserBlogs(data.blogs);
     };
 
     fetchBlogs();
