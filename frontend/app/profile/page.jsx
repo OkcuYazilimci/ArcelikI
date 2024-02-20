@@ -21,7 +21,7 @@ const MyProfile = () => {
           credentials: 'include'
         });
         const data = await response.json();
-        setUserData(data.users);
+        setUserData(data.user);
         setMyBlogs(data.blogs);
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -53,7 +53,7 @@ const MyProfile = () => {
       }
     }
   };
-  console.log(userData)
+
   return (
     <section>
         <Profile
@@ -63,6 +63,7 @@ const MyProfile = () => {
           blogs={myBlogs}
           // handleEdit={handleEdit}
           handleDelete={handleDelete}
+          isVerified={userData.isVerified}
         />
     </section>
   );

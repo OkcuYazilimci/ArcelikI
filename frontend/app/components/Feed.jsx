@@ -28,6 +28,8 @@ const Feed = () => {
 
         if (success) {
           setBlogData(data.blogs);
+          console.log(data.blogs);
+
         } else {
           console.error('Error fetching data:', error);
         }
@@ -41,26 +43,11 @@ const Feed = () => {
     fetchData();
   }, []);
 
-  const handleSearchChange = async () => {
-    try {
-      const response = await fetch(`http://localhost:3000/api-blog/search?search=${searchText}`);
-      const data = await response.json();
-  
-      if (response.ok) {
-        // Redirect to search page with the search term
-        router.push(`/search?searchTerm=${searchText}`);
-      } else {
-        console.error('Error fetching search results2:', data.error);
-      }
-    } catch (error) {
-      console.error('Error fetching search results:', error);
-    }
-  };
-  
-
   const handleButtonClick = () => {
-    handleSearchChange();
+    // Redirect to search page with the search term
+    router.push(`/search?searchTerm=${searchText}`);
   };
+  
 
   // Return the JSX for rendering the component
   return (
