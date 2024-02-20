@@ -14,7 +14,7 @@ export const getAllBlogs = async(req, res, next) => {
         .sort({createdAt: -1})
         .limit(12);
     }catch(err){
-        return console.log(err);
+        return res.status(500).json({ error: 'Server Error', details: err.message});
     }
     if (!blogs) {
         return res.status(404).json({message: "No blogs found"})
