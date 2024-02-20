@@ -20,6 +20,10 @@ const blogSchema = new Schema({
         ref:"User",
         required: false,
     },
+    displayName: {
+        type: String,
+        required: false,
+    },
     createdAt: {
         type: Date,
         default: Date.now(),

@@ -59,7 +59,7 @@ export const myProfile = async(req, res) => {
         users = await User.findById(id).select('_id displayName email imageurl blogs')
         .populate({
             path: 'blogs',
-            select: '_id title description image createdAt', 
+            select: '_id title description displayName image createdAt', 
         });
     } catch (err) {
         res.status(401).json({ message: "Problem Occured while getting Profile"});

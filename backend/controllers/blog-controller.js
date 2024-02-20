@@ -120,6 +120,7 @@ export const addBlog = async (req, res, next) => {
         description,
         image: imageURL,
         user: userId,
+        displayName: existingUser.displayName,
     });
 
         const session = await mongoose.startSession();
@@ -168,6 +169,26 @@ export const getById = async (req, res) => {
         blogs = await Blog.find({user}).populate('user', 'displayName email imageurl _id').
         select('title description user image createdAt _id').sort({createdAt: -1});
         console.log(blogs);
+    } catch (err) {
+        console.log(err);
+    }
+    if(!blogs) {
+        return res.status(404).json({message: "No Blog Found!"})
+    }
+    return res.status(200).json({blogs})
+};
+
+export const getWithId = async (req, res) => {
+    const id = req.params.id;
+    console.log("\n Id right: ",id);
+
+    let blogs;
+    let user;
+    try{
+        user = await User.findById(id);
+        blogs = await Blog.find({user}).populate('user', 'displayName email imageurl _id').
+        select('title description user image createdAt _id').sort({createdAt: -1});
+
     } catch (err) {
         console.log(err);
     }
