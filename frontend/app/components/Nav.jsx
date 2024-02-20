@@ -7,6 +7,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import logoImage from '../../public/assets/logo-beyaz.svg';
+import { toast } from 'react-toastify'; // Import toast from react-toastify
+import 'react-toastify/dist/ReactToastify.css'; // Import the CSS for the toastify styles
 
 const Nav = () => {
   const [toggleDropdown, setToggleDropdown] = useState(false);
@@ -19,6 +21,16 @@ const Nav = () => {
   const handleLogout = async () => {
     router.push('/login');  // Reload the page after logout
     await logout();
+  };
+
+  const handleLinkClick = (path) => {
+    if (!user) {
+      // Display toast message and prevent navigation
+      toast.error('Please log in or sign up first');
+    } else {
+      // Navigate to the link
+      router.push(path);
+    }
   };
 
   return (
@@ -40,15 +52,15 @@ const Nav = () => {
 
         {/* Links in the center */}
         <div className={`hidden sm:flex gap-8 items-center text-xl justify-center ml-20`}>
-          <Link href="/" className="nav-links">
+          <button type="button" className="nav-links" onClick={() => handleLinkClick('/')}>
             Home
-          </Link>
-          <Link href="/create-post" className="nav-links">
+          </button>
+          <button type="button" className="nav-links" onClick={() => handleLinkClick('/create-post')}>
             Create
-          </Link>
-          <Link href="/profile" className="nav-links">
+          </button>
+          <button type="button" className="nav-links" onClick={() => handleLinkClick('/profile')}>
             Collection
-          </Link>
+          </button>
           {/* Add other navigation links here */}
         </div>
 
