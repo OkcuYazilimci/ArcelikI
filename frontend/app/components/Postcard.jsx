@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { useAuth } from "@/context/AuthContext";
 
 // Define the Postcard component
 const Postcard = ({ blog, handleDelete }) => {
@@ -9,6 +10,7 @@ const Postcard = ({ blog, handleDelete }) => {
   const { data: session } = useSession();
   const pathName = usePathname();
   const router = useRouter();
+  const { user } = useAuth();
 
   function timeAgo(timestamp) {
     if (!timestamp) {
@@ -39,7 +41,7 @@ const Postcard = ({ blog, handleDelete }) => {
 
   const handleProfileClick = () => {
 
-    if (blog.user._id === session?.user.id) return router.push("/profile");
+    if (blog.user._id === user.id) return router.push("/profile");
 
     router.push(`/profile/${blog.user._id}`);
   };
