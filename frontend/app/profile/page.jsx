@@ -21,7 +21,7 @@ const MyProfile = () => {
           credentials: 'include'
         });
         const data = await response.json();
-        setUserData(data.user);
+        setUserData(data.users);
         setMyBlogs(data.users.blogs);
       } catch (error) {
         console.error("Error fetching user data:", error);
