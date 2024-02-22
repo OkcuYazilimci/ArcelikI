@@ -55,7 +55,6 @@ const authorizeCookie = async (req, res, next) => {
 
         Jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
             if (err) {
-                console.log("---logg err message:", err.message);
                 return res.status(401).json({
                     error: 'Not Authorized, invalid token'
                 });

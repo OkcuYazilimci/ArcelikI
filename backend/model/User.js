@@ -42,7 +42,7 @@ const userSchema = new Schema({
         type: String
     },
     blogs:[{type: mongoose.Types.ObjectId,ref:"Blog", required: false}],
-})
+});
 
 userSchema.index({ displayName: 'text' });
 

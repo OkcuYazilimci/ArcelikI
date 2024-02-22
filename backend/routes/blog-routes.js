@@ -7,7 +7,7 @@ const blogRouter = express.Router();
 
 blogRouter.get("/getAll", authorizeCookie, getAllBlogs);
 blogRouter.get("/getAllAdmin", getAllAdmin);
-blogRouter.get("/search", searchBlog);
+blogRouter.get("/search",authorizeCookie,searchBlog);
 blogRouter.get("/getById", authorizeCookie, getById); //api-blog/:id (this end-point will be connect with Collection)
 blogRouter.get("/:id", authorizeCookie, getWithId);
 blogRouter.post("/add", authorizeCookie, upload, addBlog); // api-blog/add
