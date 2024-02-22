@@ -42,11 +42,15 @@ export const getAllAdmin = async(req, res, next) => {
 export const searchBlog = async (req, res) => {
     const searchTerm = req.query.search;
 
-    if (searchTerm.length < 3) {
-        return res.status(400).json({ message: "Search term must be at least 3 characters long." });
+    const escapedSearchTerm = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+    console.log("---ESCAPED----", escapedSearchTerm);
+
+    if (escapedSearchTerm.length < 3 || escapedSearchTerm.length > 15) {
+        return res.status(400).json({ message: "Wrong format" });
     }
 
-    const regexPattern = new RegExp(searchTerm, "i");
+    const regexPattern = new RegExp(escapedSearchTerm, "i");
     try {
         const matchingUsers = await User.find({ displayName: { $regex: regexPattern } }, '_id');
         const userIds = matchingUsers.map(user => user._id);
@@ -74,8 +78,9 @@ export const searchBlog = async (req, res) => {
         blogResult,
     }
 
-    res.status(200).json(bothResult); } catch(err) {
-        res.status(400).json({message: "Unable to Search"});
+    res.status(200).json(bothResult); 
+    } catch(err) {
+        res.status(404).json({message: "Unable to Search"});
     }
 } 
 

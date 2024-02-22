@@ -1,6 +1,6 @@
 export const GET = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api-blog/getAll', {
+      const response = await fetch('https://localhost:3000/api-blog/getAll', {
         method: 'GET',
         credentials: 'include',
       });

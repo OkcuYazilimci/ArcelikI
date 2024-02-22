@@ -10,8 +10,20 @@ import connectDB from './config/db.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { saveLogs} from "./controllers/log-controller.js";
+import https from 'https';
+import fs from 'fs';
 
 const app = express();
+
+
+const options = {
+  key: fs.readFileSync(process.env.SSL_KEY_PATH),
+  cert: fs.readFileSync(process.env.SSL_CERT_PATH)
+}
+
+https.createServer(options, app).listen(3000, () => {
+  console.log('HTTPS Server running on port 3000');
+})
 
 dotenv.config();
 
@@ -27,10 +39,6 @@ app.use(cors({
   origin: 'http://localhost:3001', 
   credentials: true, 
 }));
-
-app.listen(PORT, () => {
-    console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
-});
 
 connectDB();
 
