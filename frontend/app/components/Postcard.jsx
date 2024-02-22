@@ -50,7 +50,7 @@ const Postcard = ({ blog, handleDelete }) => {
   // console.log(blog.user._id)
 
   return (
-    <div className="max-w-sm mx-5 bg-white rounded-xl overflow-hidden shadow-md p-4 post_box_shadow mb-10">
+    <div className="max-w-sm mx-2 bg-neutral-700 rounded-xl overflow-hidden box-shadow p-4 mb-5">
       <div className="flex items-center mb-3"
       >
         <img
@@ -58,11 +58,11 @@ const Postcard = ({ blog, handleDelete }) => {
           height={30}
           width={30}
           alt=""
-          className="rounded-full mr-3 border-2 border-violet-500 hover:cursor-pointer"
+          className="rounded-full mr-3 border-2 border-white hover:cursor-pointer"
           onClick={handleProfileClick}
         />
-          <p className="text-gray-800 font-semibold hover:cursor-pointer hover:text-gray-500" onClick={handleProfileClick}>{blog.user?.displayName}</p>
-          <p className="text-xs text-gray-400 ml-auto my-auto">{formattedTimeAgo}</p>
+          <p className="text-white font-semibold hover:cursor-pointer hover:text-gray-500" onClick={handleProfileClick}>{blog.user?.displayName}</p>
+          <p className="text-xs text-gray-200 ml-auto my-auto">{formattedTimeAgo}</p>
       </div>
       <div className="relative">
       <img
@@ -79,8 +79,8 @@ const Postcard = ({ blog, handleDelete }) => {
         </div>
       </div>
       <div>
-        <h2 className="font-bold text-xl mb-2">{blog.title}</h2>
-        <p className="text-gray-700">{blog.description}</p>
+        <h2 className="font-bold text-white text-xl mb-2">{blog.title}</h2>
+        <p className="text-white">{blog.description}</p>
       </div>
       {pathName === "/profile" && (
         <div className='w-100 text-center mt-5 flex-center border-t border-gray-100 pt-3'>

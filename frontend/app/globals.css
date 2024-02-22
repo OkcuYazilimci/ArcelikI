@@ -136,7 +136,7 @@ body {
 }
 
 .search_input {
-  @apply block w-full rounded-md border border-gray-200 bg-white py-2.5 font-satoshi pl-5 pr-12 text-sm shadow-lg font-medium focus:border-gray-400 focus:outline-none focus:ring-0;
+  @apply block w-full rounded-md border border-white bg-zinc-800 py-2.5 font-satoshi pl-5 pr-12 text-sm shadow-lg rounded-full font-medium focus:border-gray-400 focus:outline-none focus:ring-0;
 }
 
 .copy_btn {
@@ -158,8 +158,7 @@ body {
 
 /* Form Component */
 .form_textarea {
-  @apply w-full flex rounded-lg h-[200px] mt-2 p-3 text-sm text-gray-500 outline-0;
-  align-items: flex-start; /* Add this line to align items to the top */
+  @apply w-full relative left-0 top-0 rounded-lg h-[200px] mt-2 p-3 text-sm text-gray-500 outline-0;
 }
 
 .form_input {
@@ -416,4 +415,8 @@ body {
 
 .verified-text {
   font-size: x-large;
+}
+
+.box-shadow {
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
 }

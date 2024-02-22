@@ -51,7 +51,7 @@ const Nav = () => {
         </Link>
 
         {/* Links in the center */}
-        <div className={`hidden sm:flex gap-8 items-center text-xl justify-center ml-20`}>
+        <div className={`hidden sm:flex gap-8 items-center text-xl justify-center ml-32`}>
           <button type="button" className="nav-links" onClick={() => handleLinkClick('/')}>
             Home
           </button>
@@ -65,7 +65,7 @@ const Nav = () => {
         </div>
 
         {user ? (
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-4">
             <button type="button" className="bn3" onClick={handleLogout}>
               Sign out
             </button>

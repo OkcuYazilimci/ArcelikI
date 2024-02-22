@@ -4,8 +4,7 @@ import './globals.css'
 import Nav from './components/Nav'
 import Provider from './components/Provider'
 import Footer from './components/Footer'
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Toast from './components/ToastContainer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -27,7 +26,7 @@ export default function RootLayout({ children }) {
           </main>
         </Provider>
       </SessionProvider>
-      <ToastContainer />
+      <Toast />
       </body>
     </html>
   )

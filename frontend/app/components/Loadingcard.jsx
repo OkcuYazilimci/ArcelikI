@@ -3,7 +3,7 @@ import React from 'react'
 const Loadingcard = () => {
   return (
     <div className='flex flex-wrap justify-center gap-5'>
-      <div className="mx-5 bg-white rounded-xl overflow-hidden shadow-md p-4 post_box_shadow mb-10" style={{width: 388, height: 526}}>
+      <div className="mx-5 bg-neutral-700 rounded-xl overflow-hidden shadow-md p-4 post_box_shadow mb-10" style={{width: 388, height: 526}}>
         <div className="flex items-center mb-3">
           {/* Display Image Skeleton */}
           <div className="w-12 h-12 bg-gray-300 rounded-full animate-pulse mr-3"></div>
@@ -21,7 +21,7 @@ const Loadingcard = () => {
           <p className="text-gray-700 bg-gray-300 h-8 rounded-md animate-pulse" style={{ width: '50%' }}></p>
         </div>
       </div>
-      <div className="mx-5 bg-white rounded-xl overflow-hidden shadow-md p-4 post_box_shadow mb-10" style={{width: 388, height: 526}}>
+      <div className="mx-5 bg-neutral-700 rounded-xl overflow-hidden shadow-md p-4 post_box_shadow mb-10" style={{width: 388, height: 526}}>
         <div className="flex items-center mb-3">
           {/* Display Image Skeleton */}
           <div className="w-12 h-12 bg-gray-300 rounded-full animate-pulse mr-3"></div>
@@ -39,7 +39,7 @@ const Loadingcard = () => {
           <p className="text-gray-700 bg-gray-300 h-8 rounded-md animate-pulse" style={{ width: '50%' }}></p>
         </div>
       </div>
-      <div className="mx-5 bg-white rounded-xl overflow-hidden shadow-md p-4 post_box_shadow mb-10" style={{width: 388, height: 526}}>
+      <div className="mx-5 bg-neutral-700 rounded-xl overflow-hidden shadow-md p-4 post_box_shadow mb-10" style={{width: 388, height: 526}}>
         <div className="flex items-center mb-3">
           {/* Display Image Skeleton */}
           <div className="w-12 h-12 bg-gray-300 rounded-full animate-pulse mr-3"></div>
@@ -57,7 +57,7 @@ const Loadingcard = () => {
           <p className="text-gray-700 bg-gray-300 h-8 rounded-md animate-pulse" style={{ width: '50%' }}></p>
         </div>
       </div>
-      <div className="mx-5 bg-white rounded-xl overflow-hidden shadow-md p-4 post_box_shadow mb-10" style={{width: 388, height: 526}}>
+      <div className="mx-5 bg-neutral-700 rounded-xl overflow-hidden shadow-md p-4 post_box_shadow mb-10" style={{width: 388, height: 526}}>
         <div className="flex items-center mb-3">
           {/* Display Image Skeleton */}
           <div className="w-12 h-12 bg-gray-300 rounded-full animate-pulse mr-3"></div>
