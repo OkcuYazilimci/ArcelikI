@@ -44,6 +44,7 @@ export const searchBlog = async (req, res) => {
 
     const escapedSearchTerm = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     console.log("---ESCAPED----", escapedSearchTerm);
+
     if (escapedSearchTerm.length < 3 || escapedSearchTerm.length > 15) {
         return res.status(400).json({ message: "Wrong format" });
     }
@@ -76,7 +77,8 @@ export const searchBlog = async (req, res) => {
         blogResult,
     }
 
-    res.status(200).json(bothResult); } catch(err) {
+    res.status(200).json(bothResult); 
+    } catch(err) {
         res.status(404).json({message: "Unable to Search"});
     }
 } 

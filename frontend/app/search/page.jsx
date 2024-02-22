@@ -13,7 +13,9 @@ const SearchPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`https://localhost:3000/api-blog/search?search=${searchTerm}`);
+        const response = await fetch(`https://localhost:3000/api-blog/search?search=${searchTerm}`, {
+        credentials: 'include'
+      });
         
         const data = await response.json();
 
