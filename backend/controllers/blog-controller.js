@@ -43,6 +43,7 @@ export const searchBlog = async (req, res) => {
     const searchTerm = req.query.search;
 
     const escapedSearchTerm = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
     console.log("---ESCAPED----", escapedSearchTerm);
 
     if (escapedSearchTerm.length < 3 || escapedSearchTerm.length > 15) {
