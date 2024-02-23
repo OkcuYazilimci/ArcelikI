@@ -34,7 +34,7 @@ const Nav = () => {
   };
 
   return (
-    <nav className="p-4 shadow-2xl flex justify-center items-center">
+    <nav className="p-4 flex justify-center items-center">
       <div className="container flex justify-between items-center">
         {/* Logo on the left */}
         <Link href="/">

@@ -1,13 +1,12 @@
+
 // AuthContext.js
 
-import { useRouter } from 'next/navigation';
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const router = useRouter();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -46,7 +45,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
-      <RedirectUnauthenticated>{children}</RedirectUnauthenticated>
+      {children}
     </AuthContext.Provider>
   );
 };
@@ -55,17 +54,4 @@ export const useAuth = () => {
   return useContext(AuthContext);
 };
 
-// Higher-order component for redirecting unauthenticated users
-const RedirectUnauthenticated = ({ children }) => {
-  const { user } = useAuth();
-  const router = useRouter();
 
-  useEffect(() => {
-    // Redirect to "/" if the user is not logged in and pathname is not "login" or "sign-up"
-    if (user === null && !['/login', '/sign-up'].includes(router.pathname)) {
-      router.push('/');
-    }
-  }, [user, router.pathname]);
-
-  return children;
-};
