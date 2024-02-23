@@ -56,12 +56,16 @@ const MyProfile = () => {
     }
   };
 
+  console.log("USER DATA", userData)
+  console.log("BLOG DATA", myBlogs)
+
+
   return (
     <section>
       <Suspense fallback={<Loading />}>
         <Profile
           name={userData.displayName}
-          profileImage={userData.imageUrl == null ? blankUser : userData.imageUrl}
+          profileImage={userData.imageurl == null ? blankUser : userData.imageurl}
           desc='Welcome to your personalized profile page. Share your exceptional AI Arts and inspire others with the power of your imagination'
           blogs={myBlogs}
           // handleEdit={handleEdit}

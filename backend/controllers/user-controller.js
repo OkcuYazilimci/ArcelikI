@@ -37,7 +37,7 @@ export const getUserById = async(req, res) => {
         users = await User.findById(id).select('_id displayName email imageurl blogs')
         .populate({
             path: 'blogs',
-            select: '_id title description image createdAt', 
+            select: '_id title description displayName image createdAt', 
         });
         console.log(users);
     } catch (err) {
