@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { useRouter } from "next/navigation";
 import { useCookies } from 'react-cookie';
+import { toast } from 'react-toastify';
 
 
 const Form = () => {
@@ -46,10 +47,10 @@ const Form = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log('Blog entry submitted successfully:', data);
+        toast.success("Created successfully!")
         router.push("/");
       } else {
-        console.error('Error submitting blog entry');
+        toast.error("Sorry! There was an error.")
       }
     } catch (error) {
       console.error('Error:', error);
@@ -124,6 +125,13 @@ const Form = () => {
             Cancel
           </Link>
 
+          {/* Loading Overlay */}
+          {loading && (
+            <div className="loading-overlay rounded-xl">
+              <div className="loading-spinner"></div>
+            </div>
+          )}
+
           <button
           type='submit'
           className='px-5 py-1.5 text-sm border create-button rounded-full bg-white text-black border-black transition-all duration-300 hover:bg-black hover:text-white hover:font-bold'
@@ -131,7 +139,6 @@ const Form = () => {
           >
           {loading ? 'Creating...' : 'Create'}
         </button>
-
         </div>
       </form>
     </section>
