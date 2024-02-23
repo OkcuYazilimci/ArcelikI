@@ -41,6 +41,13 @@ const userSchema = new Schema({
     emailToken: {
         type: String
     },
+    refreshToken: {
+        type: [String],
+    },
+    roles: {
+        type: String,
+        default: 'User',
+    },
     blogs:[{type: mongoose.Types.ObjectId,ref:"Blog", required: false}],
 });
 
