@@ -29,9 +29,6 @@ dotenv.config();
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-//For swagger
-
-const PORT = process.env.PORT;
 
 // Add CORS middleware here for leting comm. with different ports
 app.use(cors({
@@ -56,5 +53,12 @@ app.use("/api-mail", emailRouter);
 app.use("/api-user", router);
 app.use("/api-blog", blogRouter);
 app.use("/api-logging", logRouter);
+
+
+const PORT = process.env.PORT || 3034;
+
+app.listen(PORT, () => {
+  console.log(`server running on ${PORT}`);
+})
 
 export default app;

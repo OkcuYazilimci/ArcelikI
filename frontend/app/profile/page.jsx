@@ -18,7 +18,7 @@ const MyProfile = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await fetch(`https://localhost:3000/api-user/getById`, {
+        const response = await fetch(`http://localhost:3000/api-user/getById`, {
           credentials: 'include'
         });
         const data = await response.json();
@@ -39,7 +39,7 @@ const MyProfile = () => {
   
     if (hasConfirmed) {
       try {
-        await fetch(`https://localhost:3000/api-blog/${blogId}`, {
+        await fetch(`http://localhost:3000/api-blog/${blogId}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
