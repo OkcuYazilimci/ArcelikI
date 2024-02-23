@@ -76,7 +76,7 @@ const Feed = () => {
     try {
       setIsLoading(true); // Set loading to true before fetching data
   
-      const response = await fetch(`http://localhost:3000/api-blog/search?search=${searchText}`);
+      const response = await fetch(`http://localhost:3000/api-blog/search?search=${searchText}`)
       const data = await response.json();
   
       if (response.ok) {
