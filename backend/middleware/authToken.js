@@ -34,7 +34,6 @@ const refreshTokenCreate = async (displayName, email) => {
 };
 
 const authorizeToken = async (req, res, next) => {
-    
     try{ 
         const token = 
         req.headers['authorization'] && req.headers['authorization'].split(" ")[1];
@@ -45,8 +44,8 @@ const authorizeToken = async (req, res, next) => {
             succeed: false,
             error: 'No token available',
             });
-        }
-        Jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
+        } else {
+            Jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
                 if (err) {
                     console.log(err.message);
                     return res.status(401).json({
@@ -57,7 +56,8 @@ const authorizeToken = async (req, res, next) => {
                     console.log("req user id: ", req.user);
                     next();
                 }
-                });
+                }) 
+            };
     } catch (error) {
         res.status(401).json({
             error: 'Not Authorized'

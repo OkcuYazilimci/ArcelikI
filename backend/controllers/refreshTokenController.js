@@ -57,3 +57,47 @@ const handleRefreshToken = async (req, res) => {
         }
     );
 }
+
+const accessRenew = async (req, res) => {
+    try {
+        const token = req.cookies.jsonwebtoken;
+
+        if (!token) {
+            return res.status(403).json({message: "No Token Available!"})
+        } else {
+            Jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
+                if (err) {
+                    return res.status(401).json({
+                        error: 'Not Authorized, invalid token'
+                    });
+                } else {
+                    userEmail = decoded.email;
+                    try {
+                    const user = await User.findOne({ email: userEmail });
+                    if (user) {
+                        
+                        if (token === user.refreshToken) {
+                            console.log('Token matches user\'s refreshToken creating new access token');
+                            const newAccessToken = await createToken(user._id);
+
+                            return res.status(200).json({
+                            accessToken: newAccessToken,
+                            });
+                        } else {
+                         
+                          console.log('Token does not match user\'s refreshToken');
+                        }
+                      } else {
+                        
+                        console.log('User not found');
+                      }
+                    } catch {
+
+                    }
+                }
+            });
+        }
+    } catch {}
+}
+
+export {accessRenew}

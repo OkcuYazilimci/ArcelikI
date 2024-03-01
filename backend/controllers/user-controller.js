@@ -161,6 +161,9 @@ export const login = async(req, res, next) => {
         const token = await createToken(existingUser._id);
         const refreshToken = await refreshTokenCreate(existingUser.displayName, existingUser.email);
 
+        existingUser.refreshToken = refreshToken;
+        await existingUser.save();
+        
         const idCookie = existingUser._id.toString();
         console.log("\n ID COOKIE HERE: ",idCookie);
         
