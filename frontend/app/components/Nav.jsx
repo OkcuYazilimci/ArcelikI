@@ -33,9 +33,11 @@ const Nav = () => {
     }
   };
 
+  console.log("USER İNFO", user);
+
   return (
-    <nav className="p-4 flex justify-center items-center">
-      <div className="container flex justify-between items-center">
+    <nav className="py-4">
+      <div className="container flex justify-between items-center mx-auto">
         {/* Logo on the left */}
         <Link href="/">
           <div className="flex items-center">
@@ -70,7 +72,7 @@ const Nav = () => {
               Sign out
             </button>
             <Link href="/profile">
-              <img src={user.imageUrl == null ? blankUser : user.imageUrl} alt="Profile Picture" className="w-10 h-10 rounded-full mb-1 border-2 border-white hover:border-gray-400 cursor-pointer transition"/>
+              <img src={user.imageurl == null ? blankUser : user.imageurl} alt="Profile Picture" className="w-10 h-10 rounded-full mb-1 border-2 border-white hover:border-gray-400 cursor-pointer transition"/>
             </Link>
           </div>
         ) : (

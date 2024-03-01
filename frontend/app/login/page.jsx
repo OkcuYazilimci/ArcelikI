@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext'
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -41,8 +42,9 @@ const Login = () => {
         const data = await response.json(); 
         await login(data.user);
         router.push('/'); // Redirect after successful login
+        toast.success("Logged in successfully!")
       } else {
-        console.error('Login failed');
+        toast.error("Enter a valid email or password!");
       }
     } catch (error) {
       console.error('An error occurred while logging in:', error);
