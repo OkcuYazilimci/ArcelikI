@@ -1,6 +1,6 @@
 import User from "../model/User.js";
 import bcrypt from 'bcryptjs'
-import { createToken } from "../middleware/authToken.js";
+import { createToken, refreshTokenCreate } from "../middleware/authToken.js";
 import validator from "validator"
 import { sendMail } from "../middleware/emailVerification.js";
 
@@ -138,7 +138,7 @@ export const login = async(req, res, next) => {
     
     let existingUser;
     try {
-        existingUser = await User.findOne({email});
+        existingUser = await User.findOne({ email });
     } catch (err) {
         return console.log(err);
     }
@@ -159,12 +159,14 @@ export const login = async(req, res, next) => {
 
     try {
         const token = await createToken(existingUser._id);
+        const refreshToken = await refreshTokenCreate(existingUser.displayName, existingUser.email);
+
         const idCookie = existingUser._id.toString();
         console.log("\n ID COOKIE HERE: ",idCookie);
         
-        res.cookie("jsonwebtoken", token, {
+        res.cookie("jsonwebtoken", refreshToken, {
             httpOnly:true,
-            maxAge: 1000*60*60*24,
+            maxAge: 1000*60*60*5,
             sameSite: 'None',
             path: '/',
             secure: true,
@@ -181,7 +183,8 @@ export const login = async(req, res, next) => {
         };
 
         return res.status(200).json({
-            user: userResponse
+            user: userResponse,
+            accessToken: token,
         });
 
         } catch(tokenError){

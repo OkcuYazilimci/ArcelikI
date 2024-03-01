@@ -3,9 +3,29 @@ import User from "../model/User.js";
 
 const createToken = async (userId) => {
     try {
-        const token = Jwt.sign({userId} ,process.env.JWT_SECRET, { expiresIn: '1d' });
+        const token = Jwt.sign({userId} ,process.env.JWT_SECRET, { expiresIn: '3m' });
+
         console.log(process.env.JWT_SECRET)
-        console.log('Token created successfully:', token);
+        console.log('Access Token created successfully:', token);
+
+        return token;
+    } catch (error) {
+        console.error('Error creating token:', error);
+        throw error;
+    }
+};
+
+const refreshTokenCreate = async (displayName, email) => {
+    try {
+        const payload = {
+            displayName,
+            email
+          };
+        const token = Jwt.sign({payload} ,process.env.JWT_SECRET, { expiresIn: '5h' });
+
+        console.log(process.env.JWT_SECRET)
+        console.log('Refresh Token created successfully:', token);
+
         return token;
     } catch (error) {
         console.error('Error creating token:', error);
@@ -101,4 +121,4 @@ const authorizeEmail = async (req, res, next) => {
     }
 };
 
-export { createToken , authorizeCookie, authorizeToken, authorizeEmail}
+export { createToken , authorizeCookie, authorizeToken, authorizeEmail, refreshTokenCreate}
